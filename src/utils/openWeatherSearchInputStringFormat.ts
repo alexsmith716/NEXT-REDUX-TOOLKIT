@@ -1,4 +1,4 @@
-export default function formatString(string: string, apiCall: boolean) {
+export function formatString(string: string, apiCall: boolean) {
 	const row:string = string.toLowerCase().trim().replace(/\s\s+/g, ' ');
 	const s:string[] = row.split(',');
 	const cn:string = !apiCall ? s[0].replace(/\s/g, ' ') : s[0].trim().replace(/\s/g, '+');

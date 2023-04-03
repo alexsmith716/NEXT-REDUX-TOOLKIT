@@ -3,9 +3,7 @@ import axios from 'axios';
 
 //@ts-ignore
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	console.log('###################### API 11111 ###########################')
 	try {
-		console.log('###################### API 22222 ###########################')
 		let lat:string | string[] | undefined = req.query.lat;
 		let lon:string | string[] | undefined = req.query.lon;
 

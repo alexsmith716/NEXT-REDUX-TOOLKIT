@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, } from 'react';
 import {
 	getAddress,
 	fetchOpenWeatherMapError,
@@ -6,7 +6,7 @@ import {
 	openWeatherMapSliceData,
 } from './openWeatherMapSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import formatString from '../../utils/openWeatherSearchInputStringFormat';
+import { formatString } from '../../utils/openWeatherSearchInputStringFormat';
 import Loading from '../Loading';
 import Button from '../Button';
 import * as Styles from './styles';
@@ -24,21 +24,12 @@ const OpenWeatherMap = () => {
 
 	const openWeatherMapData = useAppSelector(openWeatherMapSliceData);
 
-	useEffect(() => {
-		if(openWeatherMapData){
-			console.log('>>>> OpenWeathermap: ', openWeatherMapData)
-		}
-		if(!openWeatherMapData){
-			console.log('>>>> !OpenWeathermap: ', openWeatherMapData)
-		}
-	}, [ openWeatherMapData, ]);
-
 	if(openWeatherMapData && !openWeatherMapData.error) {
 		openWeatherMapDataTemp = formatter.format(Number(openWeatherMapData?.main?.temp));
 	}
 
 	async function fetchOpenWeather(searchVar: string) {
-		if (searchVar.length < 1) {
+		if (searchVar.length < 1 || searchVar.length > 100 || (searchVar.match(/,/g)||[]).length < 2) {
 			return dispatch(fetchOpenWeatherMapError())
 		}
 
