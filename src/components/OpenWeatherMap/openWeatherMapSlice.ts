@@ -19,7 +19,7 @@ interface OpenWeatherMapSliceData {
 };
 
 interface OpenWeatherMapSliceState {
-	data: OpenWeatherMapSliceData | null;
+	data: OpenWeatherMapSliceData;
 };
 
 const openWeatherMapSliceInitialState: OpenWeatherMapSliceState = {
@@ -138,7 +138,6 @@ export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (disp
 
 export async function getAddress(geoCode: string) {
 	if (geoCode.length < 1 || geoCode.length > 100 || (geoCode.match(/,/g)||[]).length < 2) {
-		console.log('SGSGGSGSSGGSSGGSGSGSSGS 111111111')
 		return Promise.reject();
 	}
 
