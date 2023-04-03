@@ -3,7 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import axios from 'axios';
 import { LatLonType } from '../../types';
 import { AppState, AppThunk } from '../../redux/store';
-import formatString from '../../utils/openWeatherSearchInputStringFormat';
+import { formatString } from '../../utils/openWeatherSearchInputStringFormat';
 
 interface OpenWeatherMapSliceData {
 	loading: boolean;
@@ -137,7 +137,8 @@ export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (disp
 // ==========================================================
 
 export async function getAddress(geoCode: string) {
-	if (geoCode.length < 1) {
+	if (geoCode.length < 1 || geoCode.length > 100 || (geoCode.match(/,/g)||[]).length < 2) {
+		console.log('SGSGGSGSSGGSSGGSGSGSSGS 111111111')
 		return Promise.reject();
 	}
 
