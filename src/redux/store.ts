@@ -1,7 +1,8 @@
-import { configureStore, ThunkAction, ThunkDispatch} from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { Action, AnyAction, combineReducers } from 'redux';
 import { createWrapper } from 'next-redux-wrapper';
 import openWeatherMapSlice from '../components/OpenWeatherMap/openWeatherMapSlice';
+import userAgentSlice from '../components/UserAgent/userAgentSlice';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
@@ -9,6 +10,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const reducers = {
 	[openWeatherMapSlice.name]: openWeatherMapSlice.reducer,
+	[userAgentSlice.name]: userAgentSlice.reducer,
 };
 
 const rootReducers = combineReducers(reducers);

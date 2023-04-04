@@ -4,8 +4,9 @@ import { Provider } from 'react-redux';
 import { ThemeContext } from '../styled/ThemeContext';
 import { Layout } from '../components/Layout';
 import { LatLonType } from '../types';
-
+import { getUserAgent, isBot } from '../utils/userAgent';
 import { wrapper } from '../redux/store';
+import { setUserAgent } from '../components/UserAgent/userAgentSlice';
 import { getAddress, fetchOpenWeatherMapError, fetchOpenWeatherMap } from '../components/OpenWeatherMap/openWeatherMapSlice';
 
 import '../styled/fonts.css';
@@ -26,6 +27,10 @@ const App = ({ Component, ...initialProps }: AppContext & AppInitialProps) => {
 
 App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ Component, ctx }) => {
 	const isServer = typeof window === 'undefined' && !ctx.req?.url?.startsWith('/_next/data');
+
+	if (isServer) {
+		await store.dispatch(setUserAgent(getUserAgent(ctx?.req?.headers['user-agent']!), isBot(ctx?.req?.headers['user-agent']!)));
+	}
 
 	if (isServer) {
 		const startingGeo:string = 'New York, NY, US';
