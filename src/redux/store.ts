@@ -1,10 +1,9 @@
-import { configureStore, ThunkAction, } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, ThunkDispatch} from '@reduxjs/toolkit';
 import { Action, AnyAction, combineReducers } from 'redux';
 import { createWrapper } from 'next-redux-wrapper';
 import openWeatherMapSlice from '../components/OpenWeatherMap/openWeatherMapSlice';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
 
 // =====================================================================
 
