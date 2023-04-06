@@ -1,3 +1,14 @@
+export function formatStringTimeZone(string: string,) {
+	const row:string = string.toLowerCase().trim().replace(/\s\s+/g, ' ');
+	const s:string[] = row.split(',');
+	const cn:string = s[0].replace(/\s/g, ' ');
+
+	const cityName:string = (`${cn}`).trim();
+	const stateCode:string = (s[1]).trim();
+
+	return `${cityName}\u002C\u0020${stateCode}`;
+};
+
 export function formatString(string: string, apiCall: boolean) {
 	const row:string = string.toLowerCase().trim().replace(/\s\s+/g, ' ');
 	const s:string[] = row.split(',');
