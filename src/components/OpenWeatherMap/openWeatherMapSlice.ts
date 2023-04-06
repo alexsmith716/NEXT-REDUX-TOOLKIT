@@ -1,4 +1,4 @@
-import { createSlice,createSelector,PayloadAction, } from '@reduxjs/toolkit';
+import { createSlice, createSelector, PayloadAction, } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import axios from 'axios';
 import { LatLonType } from '../../types';
@@ -60,13 +60,13 @@ export const openWeatherMapSlice = createSlice({
 			}
 		},
 	},
-	extraReducers: {
-		[HYDRATE]: (state, action) => {
+	extraReducers: builder => {
+		builder.addCase(HYDRATE, (state, action) => {
 			return {
 				...state,
 				...action.payload.openWeatherMap,
 			};
-		},
+		})
 	},
 });
 

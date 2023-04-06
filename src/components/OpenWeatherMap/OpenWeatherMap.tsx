@@ -33,11 +33,9 @@ const OpenWeatherMap = () => {
 			return dispatch(fetchOpenWeatherMapError())
 		}
 
-		const gc:string | undefined = formatString(searchVar, false);
-
 		await getAddress(searchVar)
 			.then((response) => {
-				setOpenWeatherSearchInput(gc as string);
+				setOpenWeatherSearchInput(formatString(searchVar, false));
 
 				dispatch(fetchOpenWeatherMap({ lat:response.lat, lon:response.lon }))
 			})

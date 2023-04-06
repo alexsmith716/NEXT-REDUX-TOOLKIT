@@ -26,13 +26,13 @@ export const userAgentSlice = createSlice({
 			}
 		},
 	},
-	extraReducers: {
-		[HYDRATE]: (state, action) => {
+	extraReducers: builder => {
+		builder.addCase(HYDRATE, (state, action) => {
 			return {
 				...state,
 				...action.payload.userAgent,
 			};
-		},
+		})
 	},
 });
 
