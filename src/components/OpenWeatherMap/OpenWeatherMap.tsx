@@ -6,7 +6,7 @@ import {
 	openWeatherMapSliceData,
 } from './openWeatherMapSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { formatString } from '../../utils/openWeatherSearchInputStringFormat';
+import { formatString } from '../../utils/inputStringFormat';
 import Loading from '../Loading';
 import Button from '../Button';
 import * as Styles from './styles';
@@ -35,7 +35,8 @@ const OpenWeatherMap = () => {
 
 		await getAddress(searchVar)
 			.then((response) => {
-				setOpenWeatherSearchInput(formatString(searchVar, false));
+				const gc:string | undefined = formatString(searchVar, false);
+				setOpenWeatherSearchInput(gc as string);
 
 				dispatch(fetchOpenWeatherMap({ lat:response.lat, lon:response.lon }))
 			})

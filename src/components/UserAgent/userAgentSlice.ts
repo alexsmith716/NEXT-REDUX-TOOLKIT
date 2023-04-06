@@ -1,4 +1,4 @@
-import { createSlice,createSelector,PayloadAction, } from '@reduxjs/toolkit';
+import { createSlice, createSelector, createAction, PayloadAction, } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import { AppState, AppThunk } from '../../redux/store';
 
@@ -15,6 +15,8 @@ const userAgentSliceInitialState: UserAgentSliceState = {
 	data: null,
 };
 
+const hydrate = createAction<AppState>(HYDRATE);
+
 export const userAgentSlice = createSlice({
 	name: 'userAgent',
 	initialState: userAgentSliceInitialState,
@@ -27,7 +29,7 @@ export const userAgentSlice = createSlice({
 		},
 	},
 	extraReducers: builder => {
-		builder.addCase(HYDRATE, (state, action) => {
+		builder.addCase(hydrate, (state, action) => {
 			return {
 				...state,
 				...action.payload.userAgent,

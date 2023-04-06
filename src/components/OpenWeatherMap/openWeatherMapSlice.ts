@@ -1,9 +1,9 @@
-import { createSlice, createSelector, PayloadAction, } from '@reduxjs/toolkit';
+import { createSlice, createSelector, createAction, PayloadAction, } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import axios from 'axios';
 import { LatLonType } from '../../types';
 import { AppState, AppThunk } from '../../redux/store';
-import { formatString } from '../../utils/openWeatherSearchInputStringFormat';
+import { formatString } from '../../utils/inputStringFormat';
 
 interface OpenWeatherMapSliceData {
 	loading: boolean;
@@ -37,6 +37,8 @@ const openWeatherMapSliceInitialState: OpenWeatherMapSliceState = {
 	},
 };
 
+const hydrate = createAction<AppState>(HYDRATE);
+
 export const openWeatherMapSlice = createSlice({
 	name: 'openWeatherMap',
 	initialState: openWeatherMapSliceInitialState,
@@ -61,7 +63,7 @@ export const openWeatherMapSlice = createSlice({
 		},
 	},
 	extraReducers: builder => {
-		builder.addCase(HYDRATE, (state, action) => {
+		builder.addCase(hydrate, (state, action) => {
 			return {
 				...state,
 				...action.payload.openWeatherMap,
