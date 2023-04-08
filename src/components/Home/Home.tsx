@@ -1,30 +1,24 @@
 import React, { useEffect, useReducer } from 'react';
 import { NavLinks } from '../../components/NavBar/NavLinks';
+import { incrementReducer } from '../../utils/useReducers';
 import * as Styles from './styles';
 
-const reducer = (int: number, action: { [key: string]: string }) => {
-	if (int >= NavLinks.length - 1) {
-		int = -1;
-	}
-	switch (action.type) {
-		case 'incrementNavLink':
-			return int + 1;
-		default:
-			return int;
-	}
-};
-
 export default function Home() {
-	const [int, dispatch] = useReducer(reducer, 0);
+	const [int, dispatchReducer] = useReducer(incrementReducer, 0);
 
 	useEffect(() => {
-		const timer = setInterval(() => {
-			dispatch({ type: 'incrementNavLink' });
-		}, 2500);
-		return () => {
-			clearInterval(timer);
-		};
-	}, []);
+		if(NavLinks.length > 1) {
+			const timer = setInterval(() => {
+				if (int >= NavLinks.length - 1) {
+					dispatchReducer({ type: 'reset' });
+				}
+				dispatchReducer({ type: 'increment' });
+			}, 3500);
+			return () => {
+				clearInterval(timer);
+			};
+		}
+	}, [int]);
 
 	return (
 		<div data-testid="home-component">
