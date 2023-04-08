@@ -33,7 +33,8 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ Component, 
 	}
 
 	if (isServer) {
-		const startingGeo:string = 'New York, NY, US';
+		const startingGeo:string = '    nEw    yorK,    nY    ,      uS     ';
+		//const startingGeo:string = 'New York,NY,'; //fails -for state, country code is required
 
 		const latLon = await getAddress(startingGeo)
 			.then((response) => {
@@ -44,7 +45,7 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ Component, 
 				return null;
 			});
 		if(latLon) {
-			await store.dispatch(fetchOpenWeatherMap((latLon as unknown) as LatLonType))
+			await store.dispatch(fetchOpenWeatherMap((latLon as unknown) as LatLonType));
 		}
 
 	}

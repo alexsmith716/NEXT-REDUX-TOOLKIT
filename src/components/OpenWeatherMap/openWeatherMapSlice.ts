@@ -3,7 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import axios from 'axios';
 import { LatLonType } from '../../types';
 import { AppState, AppThunk } from '../../redux/store';
-import { formatString } from '../../utils/inputStringFormat';
+import { validateOpenWeatherMapInput, formatString } from '../../utils/inputStringFormat';
 
 interface OpenWeatherMapSliceData {
 	loading: boolean;
@@ -16,11 +16,14 @@ interface OpenWeatherMapSliceData {
 		temp: number | null;
 	};
 	name?: string | null;
+	location?: string | null;
 };
 
 interface OpenWeatherMapSliceState {
 	data: OpenWeatherMapSliceData;
 };
+
+const hydrate = createAction<AppState>(HYDRATE);
 
 const openWeatherMapSliceInitialState: OpenWeatherMapSliceState = {
 	data: {
@@ -34,10 +37,9 @@ const openWeatherMapSliceInitialState: OpenWeatherMapSliceState = {
 			temp: null,
 		},
 		name: null,
+		location: null,
 	},
 };
-
-const hydrate = createAction<AppState>(HYDRATE);
 
 export const openWeatherMapSlice = createSlice({
 	name: 'openWeatherMap',
@@ -56,6 +58,12 @@ export const openWeatherMapSlice = createSlice({
 			}
 		},
 		openWeatherMapSliceFailed(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
+			return {
+				...state,
+				...payload,
+			}
+		},
+		openWeatherMapSliceLocationIdentified(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
 			return {
 				...state,
 				...payload,
@@ -88,6 +96,7 @@ export const fetchOpenWeatherMapError = (): AppThunk => async (dispatch,) => {
 // ==========================================================
 
 export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (dispatch, getState) => {
+	console.log()
 	dispatch(
 		openWeatherMapSlice.actions.openWeatherMapSliceLoading({
 			data: {
@@ -104,9 +113,11 @@ export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (disp
 
 	try {
 		const response = await axios.get(req);
+		const statea = getState();
 		dispatch(
 			openWeatherMapSlice.actions.openWeatherMapSliceLoaded({
 				data: {
+					...statea.openWeatherMap.data,
 					loading: false,
 					error: false,
 					weather: {
@@ -119,7 +130,21 @@ export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (disp
 					name: response.data.name
 				},
 			}),
-		)
+		);
+
+		const stateb = getState();
+		dispatch(
+			openWeatherMapSlice.actions.openWeatherMapSliceLocationIdentified({
+				data: {
+					...stateb.openWeatherMap.data,
+					location: latLon.gc,
+				},
+			}),
+		);
+
+		const state = getState()
+		const sod = {...state.openWeatherMap.data}
+		console.log('>>>> STORE > fetchOpenWeatherMap > getState(): ', sod);
 	} catch (error) {
 		dispatch(
 			openWeatherMapSlice.actions.openWeatherMapSliceFailed({
@@ -130,16 +155,12 @@ export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (disp
 			}),
 		)
 	};
-
-	const state = getState()
-	const sod = {...state.openWeatherMap.data}
-	console.log('>>>> STORE > getAddress > getState(): ', sod);
 };
 
 // ==========================================================
 
 export async function getAddress(geoCode: string) {
-	if (geoCode.length < 1 || geoCode.length > 100 || (geoCode.match(/,/g)||[]).length < 2) {
+	if (!validateOpenWeatherMapInput(geoCode)) {
 		return Promise.reject();
 	}
 
@@ -150,6 +171,7 @@ export async function getAddress(geoCode: string) {
 		const ll = {
 			lat: response.data[0].lat,
 			lon: response.data[0].lon,
+			gc: gc,
 		};
 		return ll;
 	} catch (error) {
