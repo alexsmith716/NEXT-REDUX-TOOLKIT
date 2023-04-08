@@ -1,4 +1,4 @@
-import React, { useState, } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
 	getAddress,
 	fetchOpenWeatherMapError,
@@ -6,7 +6,8 @@ import {
 	openWeatherMapSliceData,
 } from './openWeatherMapSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { formatString } from '../../utils/inputStringFormat';
+import { validateOpenWeatherMapInput, formatString } from '../../utils/inputStringFormat';
+import { incrementReducer } from '../../utils/useReducers';
 import Loading from '../Loading';
 import Button from '../Button';
 import * as Styles from './styles';
@@ -14,6 +15,17 @@ import * as Styles from './styles';
 const OpenWeatherMap = () => {
 	const dispatch = useAppDispatch();
 	const [openWeatherSearchInput, setOpenWeatherSearchInput] = useState('');
+	const locationArray = [
+		"Berlin, DE",
+		"Seattle, WA, US",
+		"Reykjavik, IS",
+		"New York, NY, US",
+		"London, UK",
+		"Wilmington, DE, US",
+		"Tokyo, JP",
+	];
+
+	const [int, dispatchReducer] = useReducer(incrementReducer, 0);
 
 	let openWeatherMapDataTemp;
 
@@ -29,21 +41,40 @@ const OpenWeatherMap = () => {
 	}
 
 	async function fetchOpenWeather(searchVar: string) {
-		if (searchVar.length < 1 || searchVar.length > 100 || (searchVar.match(/,/g)||[]).length < 2) {
+		if (!validateOpenWeatherMapInput(searchVar)) {
 			return dispatch(fetchOpenWeatherMapError())
 		}
 
 		await getAddress(searchVar)
 			.then((response) => {
 				const gc:string | undefined = formatString(searchVar, false);
-				setOpenWeatherSearchInput(gc as string);
 
-				dispatch(fetchOpenWeatherMap({ lat:response.lat, lon:response.lon }))
+				dispatch(fetchOpenWeatherMap({ lat:response.lat, lon:response.lon, gc: gc }))
 			})
 			.catch(() => {
 				dispatch(fetchOpenWeatherMapError())
 			});
 	};
+
+	useEffect(() => {
+		if(locationArray.length > 1) {
+			const timer = setInterval(() => {
+				if (int >= locationArray.length - 1) {
+					dispatchReducer({ type: 'reset' });
+				}
+				dispatchReducer({ type: 'increment' });
+			}, 3500);
+			return () => {
+				clearInterval(timer);
+			};
+		}
+	}, [int, locationArray.length]);
+
+	useEffect(() => {
+		if(openWeatherMapData?.location) {
+			setOpenWeatherSearchInput(openWeatherMapData?.location);
+		}
+	}, [ openWeatherMapData, ]);
 
 	return (
 		<div className="container" data-testid="openweathermap-component">
@@ -86,10 +117,10 @@ const OpenWeatherMap = () => {
 											name="openWeatherSearchInput"
 											value={openWeatherSearchInput}
 											onChange={(e) => setOpenWeatherSearchInput(e.target.value)}
-											placeholder="New York, NY, US"
+											placeholder={`${locationArray[int]}`}
 											data-testid="open-weather-data-form-input"
 										/>
-										<span><Styles.InputFormat>&#123;city name&#125;,&nbsp;&nbsp;&#123;state code&#125;,&nbsp;&nbsp;&#123;country code&#125;</Styles.InputFormat></span>
+										<span><Styles.InputFormat>&#123;city name&#125;,&nbsp;&nbsp;&#123;state code&nbsp;(only for the US)&#125;,&nbsp;&nbsp;&#123;country code&#125;</Styles.InputFormat></span>
 									</div>
 								</div>
 							</div>

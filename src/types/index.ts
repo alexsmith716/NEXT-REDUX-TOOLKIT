@@ -51,6 +51,7 @@ export type User = {
 export type LatLonType = {
 	lat: number;
 	lon: number;
+	gc: string | undefined;
 };
 
 export type FilterCharacterType = {
@@ -121,29 +122,29 @@ export type BridgeRatingsType = {
 	error?: string;
 };
 
-//	export type DfTableSchemaFieldType  = {
-//		name?: string;
-//		type?: string | number;
-//	};
-//	
-//	export type DfTableDataType = {
-//		index?: number;
-//		BIN?: number;
-//		Borough?: string;
-//		FeatureCarried?: string;
-//		CurrentRating?: number;
-//		VerbalRating?: string;
-//		ReplacementCost?: number;
-//		Latitude?: number;
-//		Longitude?: number;
-//	};
-//	
-//	export type BridgeRatingsDataFrameType = {
-//		data?: {
-//			schema: {
-//				fields: DfTableSchemaFieldType[];
-//			};
-//			data: DfTableDataType[];
-//		};
-//		error?: string;
-//	};
+//  export type DfTableSchemaFieldType  = {
+//    name?: string;
+//    type?: string | number;
+//  };
+//  
+//  export type DfTableDataType = {
+//    index?: number;
+//    BIN?: number;
+//    Borough?: string;
+//    FeatureCarried?: string;
+//    CurrentRating?: number;
+//    VerbalRating?: string;
+//    ReplacementCost?: number;
+//    Latitude?: number;
+//    Longitude?: number;
+//  };
+//  
+//  export type BridgeRatingsDataFrameType = {
+//    data?: {
+//      schema: {
+//        fields: DfTableSchemaFieldType[];
+//      };
+//      data: DfTableDataType[];
+//    };
+//    error?: string;
+//  };
