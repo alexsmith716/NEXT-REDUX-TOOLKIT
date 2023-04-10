@@ -3,7 +3,7 @@ import { Action, AnyAction, combineReducers } from 'redux';
 import { createWrapper } from 'next-redux-wrapper';
 import openWeatherMapSlice from '../components/OpenWeatherMap/openWeatherMapSlice';
 import userAgentSlice from '../components/UserAgent/userAgentSlice';
-//import timeZoneSlice from '../components/TimeZone/timeZoneSlice';
+import timeZoneSlice from '../components/TimeZone/timeZoneSlice';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
@@ -12,7 +12,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 const reducers = {
 	[openWeatherMapSlice.name]: openWeatherMapSlice.reducer,
 	[userAgentSlice.name]: userAgentSlice.reducer,
-	//[timeZoneSlice.name]: timeZoneSlice.reducer,
+	[timeZoneSlice.name]: timeZoneSlice.reducer,
 };
 
 const rootReducers = combineReducers(reducers);

@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import NavBar from '../NavBar/NavBar';
 import OpenWeatherMap from '../OpenWeatherMap/OpenWeatherMap';
 import UserAgent from '../UserAgent/UserAgent';
+import TimeZone from '../TimeZone/TimeZone';
 import Footer from '../Footer/Footer';
 
 import { useReactContext } from '../../styled/ThemeContext';
@@ -44,6 +45,8 @@ export const Layout = ({ children, title = 'Alex Smith\'s App' }: Props) => {
 			<NavBar />
 
 			{children}
+
+			<TimeZone />
 
 			<OpenWeatherMap />
 

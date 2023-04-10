@@ -48,6 +48,10 @@ export type User = {
 	name: string;
 };
 
+export type TimeZoneType = {
+	gc: string | undefined;
+};
+
 export type LatLonType = {
 	lat: number;
 	lon: number;

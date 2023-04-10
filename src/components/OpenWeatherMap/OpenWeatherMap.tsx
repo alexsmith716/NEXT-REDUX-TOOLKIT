@@ -6,7 +6,8 @@ import {
 	openWeatherMapSliceData,
 } from './openWeatherMapSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { validateOpenWeatherMapInput, formatString } from '../../utils/inputStringFormat';
+import { validateInput } from '../../utils/cityStateCountryInputValidate';
+import { formatInput  } from '../../utils/cityStateCountryInputFormat';
 import { incrementReducer } from '../../utils/useReducers';
 import Loading from '../Loading';
 import Button from '../Button';
@@ -41,13 +42,13 @@ const OpenWeatherMap = () => {
 	}
 
 	async function fetchOpenWeather(searchVar: string) {
-		if (!validateOpenWeatherMapInput(searchVar)) {
+		if (!validateInput(searchVar)) {
 			return dispatch(fetchOpenWeatherMapError())
 		}
 
 		await getAddress(searchVar)
 			.then((response) => {
-				const gc:string | undefined = formatString(searchVar, false);
+				const gc:string | undefined = formatInput(searchVar, false);
 
 				dispatch(fetchOpenWeatherMap({ lat:response.lat, lon:response.lon, gc: gc }))
 			})

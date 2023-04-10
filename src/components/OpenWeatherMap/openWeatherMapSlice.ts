@@ -3,7 +3,8 @@ import { HYDRATE } from 'next-redux-wrapper';
 import axios from 'axios';
 import { LatLonType } from '../../types';
 import { AppState, AppThunk } from '../../redux/store';
-import { validateOpenWeatherMapInput, formatString } from '../../utils/inputStringFormat';
+import { validateInput } from '../../utils/cityStateCountryInputValidate';
+import { formatInput  } from '../../utils/cityStateCountryInputFormat';
 
 interface OpenWeatherMapSliceData {
 	loading: boolean;
@@ -45,38 +46,38 @@ export const openWeatherMapSlice = createSlice({
 	name: 'openWeatherMap',
 	initialState: openWeatherMapSliceInitialState,
 	reducers: {
-		openWeatherMapSliceLoading(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
+		sliceLoading(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
 			return {
 				...state,
 				...payload,
 			}
 		},
-		openWeatherMapSliceLoaded(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
+		sliceLoaded(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
 			return {
 				...state,
 				...payload,
 			}
 		},
-		openWeatherMapSliceFailed(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
+		sliceFailed(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
 			return {
 				...state,
 				...payload,
 			}
 		},
-		openWeatherMapSliceLocationIdentified(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
+		sliceLocationIdentified(state, {payload}: PayloadAction<OpenWeatherMapSliceState>) {
 			return {
 				...state,
 				...payload,
 			}
 		},
 	},
-	extraReducers: builder => {
+	extraReducers: (builder) => {
 		builder.addCase(hydrate, (state, action) => {
 			return {
 				...state,
 				...action.payload.openWeatherMap,
 			};
-		})
+		});
 	},
 });
 
@@ -84,7 +85,7 @@ export const openWeatherMapSlice = createSlice({
 
 export const fetchOpenWeatherMapError = (): AppThunk => async (dispatch,) => {
 	dispatch(
-		openWeatherMapSlice.actions.openWeatherMapSliceFailed({
+		openWeatherMapSlice.actions.sliceFailed({
 			data: {
 				loading: false,
 				error: true,
@@ -96,9 +97,8 @@ export const fetchOpenWeatherMapError = (): AppThunk => async (dispatch,) => {
 // ==========================================================
 
 export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (dispatch, getState) => {
-	console.log()
 	dispatch(
-		openWeatherMapSlice.actions.openWeatherMapSliceLoading({
+		openWeatherMapSlice.actions.sliceLoading({
 			data: {
 				loading: true,
 				error: false,
@@ -113,11 +113,12 @@ export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (disp
 
 	try {
 		const response = await axios.get(req);
-		const statea = getState();
+		const getSliceLoadedState = getState().openWeatherMap.data;
+
 		dispatch(
-			openWeatherMapSlice.actions.openWeatherMapSliceLoaded({
+			openWeatherMapSlice.actions.sliceLoaded({
 				data: {
-					...statea.openWeatherMap.data,
+					...getSliceLoadedState,
 					loading: false,
 					error: false,
 					weather: {
@@ -132,22 +133,19 @@ export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (disp
 			}),
 		);
 
-		const stateb = getState();
+		const getSliceLocationIdentifiedState = getState().openWeatherMap.data;
+
 		dispatch(
-			openWeatherMapSlice.actions.openWeatherMapSliceLocationIdentified({
+			openWeatherMapSlice.actions.sliceLocationIdentified({
 				data: {
-					...stateb.openWeatherMap.data,
+					...getSliceLocationIdentifiedState,
 					location: latLon.gc,
 				},
 			}),
 		);
-
-		const state = getState()
-		const sod = {...state.openWeatherMap.data}
-		console.log('>>>> STORE > fetchOpenWeatherMap > getState(): ', sod);
 	} catch (error) {
 		dispatch(
-			openWeatherMapSlice.actions.openWeatherMapSliceFailed({
+			openWeatherMapSlice.actions.sliceFailed({
 				data: {
 					loading: false,
 					error: true,
@@ -160,11 +158,11 @@ export const fetchOpenWeatherMap = (latLon: LatLonType): AppThunk => async (disp
 // ==========================================================
 
 export async function getAddress(geoCode: string) {
-	if (!validateOpenWeatherMapInput(geoCode)) {
+	if (!validateInput(geoCode)) {
 		return Promise.reject();
 	}
 
-	const gc:string | undefined = formatString(geoCode, true);
+	const gc:string | undefined = formatInput(geoCode, true);
 
 	try {
 		const response = await axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${gc}&limit=1&appid=${process.env.NEXT_PUBLIC_APP_ID}`);
