@@ -1,24 +1,8 @@
-export function validateOpenWeatherMapInput(string: string) {
-	const t = string.trim();
-	if (t.length > 100 || t.length < 3 || (t.match(/,/g)||[]).length < 1 || (t.match(/,/g)||[]).length > 2) {
-		return false;
-	} else {
-		const evalArr = t.split(',');
-		for (var i = 0; i < evalArr.length; i++) {
-			const e = evalArr[i].replace(/\s/g, "")
-			if(e === ""){
-				return false;
-			}
-		}
-		return true;
-	}
-};
-
 // https://openweathermap.org/api/geocoding-api
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 // q: City name, state code (only for the US) and country code divided by comma. Please use ISO 3166 country codes.
 
-export function formatString(string: string, apiCall: boolean) {
+export function formatInput(string: string, apiCall: boolean) {
 	let first;
 	let second;
 	let third;
@@ -43,6 +27,7 @@ export function formatString(string: string, apiCall: boolean) {
 
 	if(codeArr[2]) {
 		!apiCall ? location = `${first}\u002C\u0020${second}\u002C\u0020${third}` : null;
+		//apiCall ? location = first+','+second+','+third : null;
 		apiCall ? location = first+', '+second+', '+third : null;
 	} else {
 		!apiCall ? location = `${first}\u002C\u0020${second}` : null;
@@ -50,8 +35,4 @@ export function formatString(string: string, apiCall: boolean) {
 	}
 
 	return location;
-};
-
-export function formatStringTimeZone(string: string,) {
-	return string;
 };
