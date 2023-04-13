@@ -86,12 +86,13 @@ const OpenWeatherMap = () => {
 
 					{/* (>>>>>>>>>>>>>>>>>>>>>> LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
 					{!openWeatherMapData?.loading && (
-						<Styles.OpenWeathermapContainerStyled>
-							<div className="mb-2">
-								The Exclusive <i>OpenWeather.com</i>&nbsp;forecast{openWeatherMapData?.name && <>&nbsp;for:</>}
-							</div>
+						<>
 
-							<div data-testid="open-weather-data">
+							<Styles.OpenWeathermapHeader className="mb-1">
+								The Exclusive <i>OpenWeather.com</i> forecast {openWeatherMapData?.name && <>for:</>}
+							</Styles.OpenWeathermapHeader>
+
+							<div className="mb-1" data-testid="open-weather-data">
 								{!openWeatherMapData?.name && openWeatherMapData?.error && (
 									<Styles.DataMessageError>Error when attempting to fetch resource.</Styles.DataMessageError>
 									)}
@@ -102,7 +103,7 @@ const OpenWeatherMap = () => {
 							</div>
 
 							{openWeatherMapData?.name && !openWeatherMapData?.error && (
-								<div><Styles.DataMessage>{openWeatherMapData?.weather?.main}</Styles.DataMessage>&nbsp;-&nbsp;<Styles.DataMessage>{openWeatherMapData?.weather?.description}</Styles.DataMessage></div>
+								<div className="mb-1"><Styles.DataMessage>{openWeatherMapData?.weather?.main}</Styles.DataMessage>&nbsp;-&nbsp;<Styles.DataMessage>{openWeatherMapData?.weather?.description}</Styles.DataMessage></div>
 								)}
 
 							{openWeatherMapData?.name && !openWeatherMapData?.error && (
@@ -133,8 +134,9 @@ const OpenWeatherMap = () => {
 									buttonText="Fetch"
 								/>
 							</div>
-						</Styles.OpenWeathermapContainerStyled>
+						</>
 					)}
+
 				</Styles.OpenWeathermapContainer>
 			</Styles.OpenWeathermapContainerBgColor>
 		</div>

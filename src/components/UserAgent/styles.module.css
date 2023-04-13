@@ -1,0 +1,17 @@
+.container {
+	background-color: #FFFFF0;
+	border: 2px solid #68838B;
+	padding: 16px;
+}
+
+.userAgentUserAgent {
+	color: #000080;
+}
+
+.userAgentIsBot {
+	color: #800000;
+}
+
+.blurb {
+	color: #008000;
+}

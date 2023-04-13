@@ -28,7 +28,7 @@ export const userAgentSlice = createSlice({
 			}
 		},
 	},
-	extraReducers: builder => {
+	extraReducers: (builder) => {
 		builder.addCase(hydrate, (state, action) => {
 			return {
 				...state,

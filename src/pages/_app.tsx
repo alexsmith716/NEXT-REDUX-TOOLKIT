@@ -9,7 +9,8 @@ import { wrapper } from '../redux/store';
 import { setUserAgent } from '../components/UserAgent/userAgentSlice';
 import { getAddress, fetchOpenWeatherMapError, fetchOpenWeatherMap } from '../components/OpenWeatherMap/openWeatherMapSlice';
 
-import '../styled/fonts.css';
+import '../styled/global-css/fonts.css';
+import '../styled/global-css/styles.css';
 
 const App = ({ Component, ...initialProps }: AppContext & AppInitialProps) => {
 	const {store, props} = wrapper.useWrappedStore(initialProps);

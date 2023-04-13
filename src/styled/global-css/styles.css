@@ -1,0 +1,72 @@
+.container-global {
+	width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@media (min-width: 576px) {
+	.container-global {
+		max-width: 540px;
+	}
+}
+
+@media (min-width: 768px) {
+	.container-global {
+		max-width: 720px;
+	}
+}
+
+@media (min-width: 993px) {
+	.container-global {
+		max-width: 960px;
+	}
+}
+
+@media (min-width: 1201px) {
+	.container-global {
+		max-width: 1140px;
+	}
+}
+
+.flex-column-global {
+	display: flex;
+	flex-direction: column;
+}
+
+.align-items-center-global {
+	align-items: center;
+}
+
+.mb-5-global {
+	margin-bottom: 3rem;
+}
+
+.fontMontserratWebfont {
+	font-family: 'MontserratWebfont', sans-serif;
+}
+
+.fontLobsterV20LatinRegular {
+	font-family: 'LobsterV20LatinRegular', sans-serif;
+}
+
+.fontNorwester {
+	font-family: 'Norwester', sans-serif;
+}
+
+.fontOldEnglish {
+	font-family: 'OldEnglish', sans-serif;
+}
+
+.fontOpenSansBold {
+	font-family: 'OpenSansBold', sans-serif;
+}
+
+.fontPhilosopherBold {
+	font-family: 'PhilosopherBold', sans-serif;
+}
+
+.fontRobotoMonoV4LatinRegular {
+	font-family: 'RobotoMonoV4LatinRegular', sans-serif;
+}

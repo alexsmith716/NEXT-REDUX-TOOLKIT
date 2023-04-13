@@ -1,24 +1,24 @@
 import React from 'react';
 import {
-  userAgentSliceData,
+	userAgentSliceData,
 } from './userAgentSlice';
 import { useAppSelector } from '../../redux/store';
-import * as Styles from './styles';
+import styles from './styles.module.css';
 
 const UserAgent = () => {
-  const userAgentData = useAppSelector(userAgentSliceData);
+	const userAgentData = useAppSelector(userAgentSliceData);
 
 	return (
-		<div className="container" data-testid="useragent-component">
-			<div className="flex-column align-items-center mb-5">
-				<Styles.UserAgentStyled className="flex-column align-items-center">
+		<div className="container-global" data-testid="useragent-component">
+			<div className="flex-column-global align-items-center-global mb-5-global">
+				<div className={`flex-column-global align-items-center-global ${styles.container}`}>
 
-					<Styles.UserAgentUserAgent>{`device 'userAgent' store state is ${userAgentData?.userAgent} !`}</Styles.UserAgentUserAgent>
+					<div className={`fontPhilosopherBold ${styles.userAgentUserAgent}`}>{`device 'userAgent' store state is ${userAgentData?.userAgent}!`}</div>
 
-					<Styles.UserAgentIsBot>{`device 'bot' store state is ${userAgentData?.isBot} !`}</Styles.UserAgentIsBot>
+					<div className={`fontNorwester ${styles.userAgentIsBot}`}>{`device 'bot' store state is ${userAgentData?.isBot}!`}</div>
 
-					<Styles.UserAgentBlurb>UserAgentStyled!</Styles.UserAgentBlurb>
-				</Styles.UserAgentStyled>
+					<div className={`fontOldEnglish ${styles.blurb}`}>UserAgentStyled!</div>
+				</div>
 			</div>
 		</div>
 	);
