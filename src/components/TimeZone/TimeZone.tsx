@@ -12,18 +12,6 @@ import Loading from '../Loading';
 import Button from '../Button';
 import * as Styles from './styles';
 
-//  {
-//    "datetime": "2023-04-04 22:14:37",
-//    "timezone_name": "British Summer Time",
-//    "timezone_location": "Europe/London",
-//    "timezone_abbreviation": "BST",
-//    "gmt_offset": 1,
-//    "is_dst": true,
-//    "requested_location": "Oxford, United Kingdom",
-//    "latitude": 51.7520131,
-//    "longitude": -1.2578499
-//  }
-
 const TimeZone = () => {
 	const dispatch = useAppDispatch();
 	const [timeZoneSearchInput, setTimeZoneSearchInput] = useState('');
@@ -40,13 +28,40 @@ const TimeZone = () => {
 
 	const [int, dispatchReducer] = useReducer(incrementReducer, 0);
 
-	//const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-	useEffect(() => {
-		if(timeZoneData.datetime){
-			//console.log('>>>>>> timeZoneData: ', timeZoneData)
+	// any, number, bigint, enum
+	function getFormattedDate(datetime: string) {
+		const datetimeR = datetime.split(" ")[0].replace(/-0+/g, '-');
+		const datetimeArr = datetimeR.split("-");
+		const tzYear = Number(datetimeArr[0]);
+		const tzMonth = months[Number(datetimeArr[1])-1];
+		const tzDay = datetimeArr[2];
+		const d = `${tzMonth}\u0020${tzDay}\u002C\u0020${tzYear}`;
+		return d;
+	};
+
+	function getFormattedTime(datetime: string) {
+		const datetimeArr = datetime.split(" ")[1].split(':');
+		const hour = Number(datetimeArr[0]);
+		const minute = Number(datetimeArr[1]);
+		const second = Number(datetimeArr[2]);
+		let formattedTime;
+
+		if (hour > 0 && hour <= 12) {
+			formattedTime = hour;
+		} else if (hour > 12) {
+			formattedTime = (hour - 12);
+		} else if (hour == 0) {
+			formattedTime = '12';
 		}
-	}, [ timeZoneData ]);
+
+		formattedTime += (minute < 10) ? ':0' + minute : ':' + minute;
+		formattedTime += (second < 10) ? ':0' + second : ':' + second;
+		formattedTime += (hour >= 12) ? '\u0020PM' : '\u0020AM';
+
+		return formattedTime;
+	};
 
 	async function fetchTimeZoneData(searchVar: string) {
 		if (!validateInput(searchVar)) {
@@ -85,13 +100,13 @@ const TimeZone = () => {
 
 					{/* (>>>>>>>>>>>>>>>>>>>>>> LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
 					{!timeZoneData?.loading && (
-						<Styles.TimeZoneContainerStyled>
+						<>
 
-							<div className="mb-2">
-								The Exclusive <i>Abstractapi.com</i>&nbsp;timezone {timeZoneData?.datetime && <>&nbsp;for:</>}
-							</div>
+							<Styles.TimeZoneHeader className="mb-1">
+								The Exclusive <i>Abstractapi.com</i> time {timeZoneData?.datetime && <>for:</>}
+							</Styles.TimeZoneHeader>
 
-							<div data-testid="timezone-data">
+							<div  className="mb-1" data-testid="timezone-data">
 								{!timeZoneData?.datetime && timeZoneData?.error && (
 									<Styles.DataMessageError>Error when attempting to fetch resource.</Styles.DataMessageError>
 									)}
@@ -102,11 +117,15 @@ const TimeZone = () => {
 							</div>
 
 							{timeZoneData?.datetime && !timeZoneData?.error && (
-								<div><Styles.DataMessage>{timeZoneData.timezone_name}</Styles.DataMessage>&nbsp;-&nbsp;<Styles.DataMessage>{timeZoneData.timezone_abbreviation}</Styles.DataMessage></div>
+								<div className="mb-1"><Styles.DataMessageDate>{getFormattedDate(timeZoneData.datetime)}</Styles.DataMessageDate></div>
 								)}
 
 							{timeZoneData?.datetime && !timeZoneData?.error && (
-								<div><Styles.DataMessageTemp>{timeZoneData.datetime}</Styles.DataMessageTemp></div>
+								<div className="mb-1"><Styles.DataMessageTime>{getFormattedTime(timeZoneData.datetime)}</Styles.DataMessageTime></div>
+								)}
+
+							{timeZoneData?.datetime && !timeZoneData?.error && (
+								<div><Styles.DataMessageTZ>{timeZoneData.timezone_name}</Styles.DataMessageTZ>&nbsp;-&nbsp;<Styles.DataMessageTZ>{timeZoneData.timezone_abbreviation}</Styles.DataMessageTZ></div>
 								)}
 
 							<div className="mt-2 mb-3">
@@ -134,7 +153,7 @@ const TimeZone = () => {
 								/>
 							</div>
 
-						</Styles.TimeZoneContainerStyled>
+						</>
 					)}
 
 				</Styles.TimeZoneContainer>

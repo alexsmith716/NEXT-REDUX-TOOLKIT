@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { AppColors } from '../../styled';
 
 export const TimeZoneContainerBgColor = styled.div`
-	background-color: #EEEED1;
+	background-color: #E0EEE0;
 `;
 
 export const TimeZoneContainer = styled.div`
@@ -10,8 +10,9 @@ export const TimeZoneContainer = styled.div`
 	text-align: center;
 `;
 
-export const TimeZoneContainerStyled = styled.div`
-	font-family: 'PhilosopherBold', sans-serif;
+export const TimeZoneHeader = styled.div`
+	color: #2E2E2E;
+	font-family: 'MontserratWebfont', sans-serif;
 `;
 
 export const DataMessageError = styled.span`
@@ -24,14 +25,21 @@ export const DataMessageName = styled.span`
 	font-family: 'RobotoMonoV4LatinRegular', sans-serif;
 `;
 
-export const DataMessage = styled.span`
-	color: #008B00;
-	font-family: 'OpenSansBold', sans-serif;
+export const DataMessageDate = styled.span`
+	color: #8B5742;
+	font-family: 'RobotoMonoV4LatinRegular', sans-serif;
+	font-weight: 600;
 `;
 
-export const DataMessageTemp = styled.span`
-	color: ${AppColors.colors.rutgersScarlet};
-	font-family: 'OpenSansBold', sans-serif;
+export const DataMessageTime = styled.span`
+	color: #C00000;
+	font-family: 'RobotoMonoV4LatinRegular', sans-serif;
+	font-weight: 600;
+`;
+
+export const DataMessageTZ = styled.span`
+	color: #00008B;
+	font-weight: 500;
 `;
 
 export const InputFormat = styled.span`

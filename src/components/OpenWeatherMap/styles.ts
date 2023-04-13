@@ -10,8 +10,9 @@ export const OpenWeathermapContainer = styled.div`
 	text-align: center;
 `;
 
-export const OpenWeathermapContainerStyled = styled.div`
-	font-family: 'PhilosopherBold', sans-serif;
+export const OpenWeathermapHeader = styled.div`
+	color: #2E2E2E;
+	font-family: 'MontserratWebfont', sans-serif;
 `;
 
 export const DataMessageError = styled.span`
