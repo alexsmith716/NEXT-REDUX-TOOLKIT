@@ -9,9 +9,9 @@ const UserAgent = () => {
 	const userAgentData = useAppSelector(userAgentSliceData);
 
 	return (
-		<div className="container-global" data-testid="useragent-component">
-			<div className="flex-column-global align-items-center-global mb-5-global">
-				<div className={`flex-column-global align-items-center-global ${styles.container}`}>
+		<div className="container" data-testid="useragent-component">
+			<div className="flex-column align-items-center mb-5">
+				<div className={`flex-column align-items-center ${styles.container}`}>
 
 					<div className={`fontPhilosopherBold ${styles.userAgentUserAgent}`}>{`device 'userAgent' store state is ${userAgentData?.userAgent}!`}</div>
 
