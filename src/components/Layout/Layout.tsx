@@ -6,6 +6,7 @@ import OpenWeatherMap from '../OpenWeatherMap/OpenWeatherMap';
 import UserAgent from '../UserAgent/UserAgent';
 import TimeZone from '../TimeZone/TimeZone';
 import Footer from '../Footer/Footer';
+import DatePicker from '../DatePicker/DatePicker';
 
 import { useReactContext } from '../../styled/ThemeContext';
 import { AppTheme } from '../../styled';
@@ -45,6 +46,8 @@ export const Layout = ({ children, title = 'Alex Smith\'s App' }: Props) => {
 			<NavBar />
 
 			{children}
+
+			<DatePicker />
 
 			<TimeZone />
 

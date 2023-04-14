@@ -1,0 +1,5 @@
+# will handle this config later (prefer tabs to spaces, don't mind lines too long...)
+[flake8]
+extend-ignore = E203
+exclude = .venv,.git,tests/codegen/snapshots,__pycache__,docs/source/conf.py,old,build,dist
+max-complexity = 10

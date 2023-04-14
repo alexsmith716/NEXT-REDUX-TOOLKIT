@@ -2,7 +2,7 @@ import { createSlice, createSelector, createAction, PayloadAction, } from '@redu
 import { HYDRATE } from 'next-redux-wrapper';
 import axios from 'axios';
 import { LatLonType } from '../../types';
-import { AppState, AppThunk } from '../../redux/store';
+import { AppState, AppThunk } from '../store';
 import { validateInput } from '../../utils/cityStateCountryInputValidate';
 import { formatInput  } from '../../utils/cityStateCountryInputFormat';
 

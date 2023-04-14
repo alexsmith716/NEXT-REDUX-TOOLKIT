@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { Action, AnyAction, combineReducers } from 'redux';
 import { createWrapper } from 'next-redux-wrapper';
-import openWeatherMapSlice from '../components/OpenWeatherMap/openWeatherMapSlice';
-import userAgentSlice from '../components/UserAgent/userAgentSlice';
-import timeZoneSlice from '../components/TimeZone/timeZoneSlice';
+import openWeatherMapSlice from './slices/openWeatherMapSlice';
+import userAgentSlice from './slices/userAgentSlice';
+import timeZoneSlice from './slices/timeZoneSlice';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 

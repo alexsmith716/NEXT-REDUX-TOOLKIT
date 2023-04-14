@@ -6,8 +6,8 @@ import { Layout } from '../components/Layout';
 import { LatLonType } from '../types';
 import { getUserAgent, isBot } from '../utils/userAgent';
 import { wrapper } from '../redux/store';
-import { setUserAgent } from '../components/UserAgent/userAgentSlice';
-import { getAddress, fetchOpenWeatherMapError, fetchOpenWeatherMap } from '../components/OpenWeatherMap/openWeatherMapSlice';
+import { setUserAgent } from '../redux/slices/userAgentSlice';
+import { getAddress, fetchOpenWeatherMapError, fetchOpenWeatherMap } from '../redux/slices/openWeatherMapSlice';
 
 import '../styled/global-css/fonts.css';
 import '../styled/global-css/styles.css';
