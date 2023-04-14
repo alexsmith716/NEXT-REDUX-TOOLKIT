@@ -1,7 +1,7 @@
 import React from 'react';
 import {
 	userAgentSliceData,
-} from './userAgentSlice';
+} from '../../redux/slices/userAgentSlice';
 import { useAppSelector } from '../../redux/store';
 import styles from './styles.module.css';
 

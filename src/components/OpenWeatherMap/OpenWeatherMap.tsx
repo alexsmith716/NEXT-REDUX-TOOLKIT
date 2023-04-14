@@ -4,7 +4,7 @@ import {
 	fetchOpenWeatherMapError,
 	fetchOpenWeatherMap,
 	openWeatherMapSliceData,
-} from './openWeatherMapSlice';
+} from '../../redux/slices/openWeatherMapSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { validateInput } from '../../utils/cityStateCountryInputValidate';
 import { formatInput  } from '../../utils/cityStateCountryInputFormat';

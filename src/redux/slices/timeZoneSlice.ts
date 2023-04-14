@@ -1,7 +1,7 @@
 import { createSlice, createSelector, createAction, PayloadAction, } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import axios from 'axios';
-import { AppState, AppThunk } from '../../redux/store';
+import { AppState, AppThunk } from '../store';
 import { TimeZoneType } from '../../types';
 import { validateInput } from '../../utils/cityStateCountryInputValidate';
 //import { formatInput  } from '../../utils/cityStateCountryInputFormat';

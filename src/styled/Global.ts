@@ -875,9 +875,9 @@ export const GlobalStyle = createGlobalStyle`
 		background-color: #708090;
 	}
 
-	.bg-color-darkseagreen-1 {
-		background-color: #c1ffc1;
-	}
+  .bg-color-seashell-2 {
+    background-color: #e0eee0;
+  }
 
 	.bg-color-olivedrab-2 {
 		background-color: #b3ee3a;

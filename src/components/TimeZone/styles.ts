@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { AppColors } from '../../styled';
 
 export const TimeZoneContainerBgColor = styled.div`
-	background-color: #E0EEE0;
+	background-color: #eee5de;
 `;
 
 export const TimeZoneContainer = styled.div`

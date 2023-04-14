@@ -1,6 +1,6 @@
 import { createSlice, createSelector, createAction, PayloadAction, } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import { AppState, AppThunk } from '../../redux/store';
+import { AppState, AppThunk } from '../store';
 
 interface UserAgentSliceData {
 	userAgent: string;

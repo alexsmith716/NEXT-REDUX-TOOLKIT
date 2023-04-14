@@ -3,7 +3,7 @@ import {
 	fetchTimeZoneError,
 	fetchTimeZone,
 	timeZoneSliceData,
-} from './timeZoneSlice';
+} from '../../redux/slices/timeZoneSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { validateInput } from '../../utils/cityStateCountryInputValidate';
 import { formatInput  } from '../../utils/cityStateCountryInputFormat';
