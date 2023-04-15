@@ -4,4 +4,9 @@ export const NavLinks = [
 		url: 'about',
 		linkType: 'navLink',
 	},
+	{
+		title: 'Pyapi',
+		url: 'pyapi',
+		linkType: 'navLink',
+	},
 ];

@@ -120,35 +120,3 @@ export type BridgeRatingsFullType = {
 	data?: string;
 	error?: string;
 };
-
-export type BridgeRatingsType = {
-	data?: string;
-	error?: string;
-};
-
-//  export type DfTableSchemaFieldType  = {
-//    name?: string;
-//    type?: string | number;
-//  };
-//  
-//  export type DfTableDataType = {
-//    index?: number;
-//    BIN?: number;
-//    Borough?: string;
-//    FeatureCarried?: string;
-//    CurrentRating?: number;
-//    VerbalRating?: string;
-//    ReplacementCost?: number;
-//    Latitude?: number;
-//    Longitude?: number;
-//  };
-//  
-//  export type BridgeRatingsDataFrameType = {
-//    data?: {
-//      schema: {
-//        fields: DfTableSchemaFieldType[];
-//      };
-//      data: DfTableDataType[];
-//    };
-//    error?: string;
-//  };
