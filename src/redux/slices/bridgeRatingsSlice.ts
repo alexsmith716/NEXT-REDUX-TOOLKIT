@@ -58,7 +58,7 @@ export const bridgeRatingsSlice = createSlice({
  
 // ==========================================================
 
-export const fetchBridgeRatings = (): AppThunk => async (dispatch, getState) => {
+export const fetchBridgeRatings = (): AppThunk => async (dispatch,) => {
 	dispatch(
 		bridgeRatingsSlice.actions.sliceLoading({
 			data: {
