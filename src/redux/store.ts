@@ -4,8 +4,10 @@ import { createWrapper } from 'next-redux-wrapper';
 import openWeatherMapSlice from './slices/openWeatherMapSlice';
 import userAgentSlice from './slices/userAgentSlice';
 import timeZoneSlice from './slices/timeZoneSlice';
-import bridgeRatingsSlice from './slices/bridgeRatingsSlice';
+
 import bridgeRatingsFullSlice from './slices/bridgeRatingsFullSlice';
+import bridgeRatingsReplacementCostSlice from './slices/bridgeRatingsReplacementCostSlice';
+import bridgeRatingsSlice from './slices/bridgeRatingsSlice';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
@@ -16,9 +18,9 @@ const reducers = {
 	[userAgentSlice.name]: userAgentSlice.reducer,
 	[timeZoneSlice.name]: timeZoneSlice.reducer,
 	[bridgeRatingsFullSlice.name]: bridgeRatingsFullSlice.reducer,
+	[bridgeRatingsReplacementCostSlice.name]: bridgeRatingsReplacementCostSlice.reducer,
 	[bridgeRatingsSlice.name]: bridgeRatingsSlice.reducer,
 };
-
 const rootReducers = combineReducers(reducers);
 
 const makeStore = () => {

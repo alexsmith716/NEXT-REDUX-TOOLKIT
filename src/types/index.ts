@@ -111,11 +111,6 @@ export type NycCountyType = {
 	error?: string;
 };
 
-export type CurrencyCommasType = {
-	data?: number;
-	error?: string;
-};
-
 export type BridgeRatingsFullType = {
 	data?: string;
 	error?: string;
