@@ -7,6 +7,8 @@ import Loading from '../components/Loading';
 
 import BridgeRatingsCsvGridColumnHeader from '../components/BridgeRatingsCsvGridColumnHeader';
 import BridgeRatingsCsvGridRowItems from '../components/BridgeRatingsCsvGridRowItems';
+import { fetchData } from '../utils/fetchAPI';
+import { TodosType, FibonacciType, NycCountyType, } from '../types';
 import {
 	fetchBridgeRatings,
 	bridgeRatingsSliceData,
@@ -25,6 +27,14 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	const [title, setTitle] = useState("");
 	const dispatch = useAppDispatch();
 
+	const [todosLoading, setTodosLoading] = useState(false);
+	const [fibonacciLoading, setFibonacciLoading] = useState(false);
+	const [nycCountyLoading, setNycCountyLoading] = useState(false);
+
+	const [todos, setTodos] = useState<TodosType>();
+	const [fibonacci, setFibonacci] = useState<FibonacciType>();
+	const [nycCounty, setNycCounty] = useState<NycCountyType>();
+
 	const bridgeRatingsData = useAppSelector(bridgeRatingsSliceData);
 
 	function dispatchLoadBridgeRatings() {
@@ -33,6 +43,18 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 
 	const bridgeRCGColumnHeader = useMemo(() => BridgeRatingsCsvGridColumnHeader(bridgeRatingsData), [bridgeRatingsData]);
 	const bridgeRCGRowItems = useMemo(() => BridgeRatingsCsvGridRowItems(bridgeRatingsData), [bridgeRatingsData]);
+
+	useEffect(() => {
+		if(todos) {
+			setTodosLoading(false)
+		}
+		if(fibonacci) {
+			setFibonacciLoading(false)
+		}
+		if(nycCounty) {
+			setNycCountyLoading(false)
+		}
+	}, [ todos, fibonacci, nycCounty, ]);
 
 	return (
 		<>
@@ -48,6 +70,142 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 				{/* ---------------------------------------------- */}
 
 				<div className="bg-color-ivory container-padding-border-radius-1 overflow-wrap-break-word mb-5">
+
+					{/* ============================================== */}
+
+					<div className="mb-3">
+						<Button
+							type="button"
+							className={`btn-primary btn-md ${todosLoading ? 'disabled' : ''}`}
+							onClick={() => {
+								setTodosLoading(true)
+								fetchData('todosapi/todos')
+									.then(data => {
+										setTodos(data);
+									})
+									.catch(() => {
+										setTodos({ 'error': 'Error when attempting to fetch resource.' })
+									})
+							}}
+							buttonText="Get The Todos"
+						/>
+
+						{todosLoading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!todosLoading && (
+							<>
+								{todos && todos.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{todos && todos.data && (
+									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
+										<pre>
+											{JSON.stringify(todos.data)}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
+					</div>
+
+					{/* ============================================== */}
+
+					<div className="mb-3">
+						<Button
+							type="button"
+							className={`btn-primary btn-md ${fibonacciLoading ? 'disabled' : ''}`}
+							onClick={() => {
+								setFibonacciLoading(true)
+								fetchData('fibonacci', '200')
+									.then(data => {
+										setFibonacci(data);
+									})
+									.catch(() => {
+										setFibonacci({ 'error': 'Error when attempting to fetch resource.' })
+									})
+							}}
+							buttonText="Get Fibonacci Length 200"
+						/>
+						{fibonacciLoading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!fibonacciLoading && (
+							<>
+								{fibonacci && fibonacci.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{fibonacci && fibonacci.data && (
+									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
+										<pre>
+											{fibonacci.data.join(' ')}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
+					</div>
+
+					{/* ============================================== */}
+
+					<div className="mb-3">
+						<Button
+							type="button"
+							className={`btn-primary btn-md ${nycCountyLoading ? 'disabled' : ''}`}
+							onClick={() => {
+								setNycCountyLoading(true)
+								fetchData('nyccounty', '1')
+									.then(data => {
+										setNycCounty(data);
+									})
+									.catch(() => {
+										setNycCounty({ 'error': 'Error when attempting to fetch resource.' })
+									})
+							}}
+							buttonText="Get NYC County"
+						/>
+						{nycCountyLoading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!nycCountyLoading && (
+							<>
+								{nycCounty && nycCounty.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{nycCounty && nycCounty.data && (
+									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
+										<pre>
+											{nycCounty.data}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
+					</div>
 
 					{/* ============================================== */}
 
