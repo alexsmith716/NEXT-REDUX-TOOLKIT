@@ -5,6 +5,7 @@ import openWeatherMapSlice from './slices/openWeatherMapSlice';
 import userAgentSlice from './slices/userAgentSlice';
 import timeZoneSlice from './slices/timeZoneSlice';
 import bridgeRatingsSlice from './slices/bridgeRatingsSlice';
+import bridgeRatingsFullSlice from './slices/bridgeRatingsFullSlice';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
@@ -14,6 +15,7 @@ const reducers = {
 	[openWeatherMapSlice.name]: openWeatherMapSlice.reducer,
 	[userAgentSlice.name]: userAgentSlice.reducer,
 	[timeZoneSlice.name]: timeZoneSlice.reducer,
+	[bridgeRatingsFullSlice.name]: bridgeRatingsFullSlice.reducer,
 	[bridgeRatingsSlice.name]: bridgeRatingsSlice.reducer,
 };
 
@@ -39,7 +41,6 @@ const makeStore = () => {
 
 type AppStore = ReturnType<typeof makeStore>;
 
-// https://github.com/reduxjs/redux-thunk/issues/333
 export type AppState = ReturnType<typeof rootReducers>;
 type TypedDispatch<T> = ThunkDispatch<T, any, Action>;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action>;
