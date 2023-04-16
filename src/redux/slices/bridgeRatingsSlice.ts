@@ -70,12 +70,10 @@ export const fetchBridgeRatings = (): AppThunk => async (dispatch, getState) => 
 
 	try {
 		const response = await fetchData('botosssgetobject/bridgeratings');
-		const getSliceLoadedState = getState().bridgeRatings.data;
 
 		dispatch(
 			bridgeRatingsSlice.actions.sliceLoaded({
 				data: {
-					...getSliceLoadedState,
 					loading: false,
 					error: false,
 					data: response,
