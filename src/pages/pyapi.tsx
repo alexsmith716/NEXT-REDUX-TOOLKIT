@@ -9,9 +9,12 @@ import BridgeRatingsCsvGridColumnHeader from '../components/BridgeRatingsCsvGrid
 import BridgeRatingsCsvGridRowItems from '../components/BridgeRatingsCsvGridRowItems';
 import { fetchData } from '../utils/fetchAPI';
 import { TodosType, FibonacciType, NycCountyType, } from '../types';
+import { addCurrencyCommas } from '../utils/addCurrencyCommas';
 
-import { fetchBridgeRatings, bridgeRatingsSliceData, } from '../redux/slices/bridgeRatingsSlice';
+import { fetchBridgeRatingsReplacementCost, bridgeRatingsReplacementCostSliceData, } from '../redux/slices/bridgeRatingsReplacementCostSlice';
 import { fetchBridgeRatingsFull, bridgeRatingsFullSliceData, } from '../redux/slices/bridgeRatingsFullSlice';
+import { fetchBridgeRatings, bridgeRatingsSliceData, } from '../redux/slices/bridgeRatingsSlice';
+
 import { BridgeRatingsFullSliceData } from '../redux/slices/bridgeRatingsFullSlice';
 
 interface PythonAPIProps {
@@ -35,18 +38,25 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	const [fibonacci, setFibonacci] = useState<FibonacciType>();
 	const [nycCounty, setNycCounty] = useState<NycCountyType>();
 
-	const bridgeRatingsData = useAppSelector(bridgeRatingsSliceData);
+	const bridgeRatingsReplacementCostData = useAppSelector(bridgeRatingsReplacementCostSliceData);
 	const bridgeRatingsFullData = useAppSelector(bridgeRatingsFullSliceData);
-	
-	function dispatchLoadBridgeRatings() {
-		if(!bridgeRatingsData.loading && !bridgeRatingsData.data) {
-			dispatch(fetchBridgeRatings())
+	const bridgeRatingsData = useAppSelector(bridgeRatingsSliceData);
+
+	function dispatchLoadBridgeRatingsReplacementCost() {
+		if(!bridgeRatingsReplacementCostData.loading && !bridgeRatingsReplacementCostData.data) {
+			dispatch(fetchBridgeRatingsReplacementCost())
 		}
 	};
-
+	
 	function dispatchLoadBridgeRatingsFull() {
 		if(!bridgeRatingsFullData.loading && !bridgeRatingsFullData.data) {
 			dispatch(fetchBridgeRatingsFull())
+		}
+	};
+
+	function dispatchLoadBridgeRatings() {
+		if(!bridgeRatingsData.loading && !bridgeRatingsData.data) {
+			dispatch(fetchBridgeRatings())
 		}
 	};
 
@@ -57,6 +67,25 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	const createBRatingsFull = useMemo(() => createBridgeRatingsFull(bridgeRatingsFullData), [bridgeRatingsFullData]);
 	const bridgeRCGColumnHeader = useMemo(() => BridgeRatingsCsvGridColumnHeader(bridgeRatingsData), [bridgeRatingsData]);
 	const bridgeRCGRowItems = useMemo(() => BridgeRatingsCsvGridRowItems(bridgeRatingsData), [bridgeRatingsData]);
+
+	useEffect(() => {
+		if(bridgeRCGColumnHeader) {
+			console.log('>>>>>> PythonAPI > bridgeRCGColumnHeader 111 ++++++');
+		}else {
+			console.log('>>>>>> PythonAPI > bridgeRCGColumnHeader 222 ++++++');
+		}
+		if(bridgeRCGRowItems) {
+			console.log('>>>>>> PythonAPI > bridgeRCGRowItems 111 ++++++');
+		} else{
+			console.log('>>>>>> PythonAPI > bridgeRCGRowItems 222 ++++++');
+		}
+	}, [ bridgeRCGColumnHeader, bridgeRCGRowItems ]);
+
+	useEffect(() => {
+		if(bridgeRatingsData?.data) {
+			//console.log('>>>>>> PythonAPI > bridgeRatingsData?.data: ', bridgeRatingsData);
+		}
+	}, [ bridgeRatingsData, ]);
 
 	useEffect(() => {
 		if(todos) {
@@ -214,6 +243,44 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
 										<pre>
 											{nycCounty.data}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
+					</div>
+
+					{/* ============================================== */}
+
+					<div className="mb-3">
+						<Button
+							type="button"
+							className={`btn-primary btn-md ${(bridgeRatingsReplacementCostData.loading || bridgeRatingsReplacementCostData.data) ? 'disabled' : ''}`}
+							onClick={() => {
+								dispatchLoadBridgeRatingsReplacementCost()
+							}}
+							buttonText="Get Brooklyn's Bridges Replacement Cost"
+						/>
+						{bridgeRatingsReplacementCostData.loading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!bridgeRatingsReplacementCostData.loading && (
+							<>
+								{!bridgeRatingsReplacementCostData.data && bridgeRatingsReplacementCostData.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{bridgeRatingsReplacementCostData.data && !bridgeRatingsReplacementCostData.error && (
+									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
+										<pre>
+											${addCurrencyCommas(bridgeRatingsReplacementCostData.data)}
 										</pre>
 									</div>
 								)}
