@@ -86,8 +86,8 @@ const TimeZone = () => {
 	}, [int, locationArray.length]);
 
 	useEffect(() => {
-		if(timeZoneData?.location) {
-			setTimeZoneSearchInput(timeZoneData?.location);
+		if(timeZoneData.location) {
+			setTimeZoneSearchInput(timeZoneData.location);
 		}
 	}, [ timeZoneData, ]);
 
@@ -96,35 +96,35 @@ const TimeZone = () => {
 			<Styles.TimeZoneContainerBgColor className="flex-column align-items-center mb-5">
 				<Styles.TimeZoneContainer className="flex-column align-items-center">
 					{/* (>>>>>>>>>>>>>>>>>>>>>> LOADING >>>>>>>>>>>>>>>>>>>>>>>>) */}
-					{timeZoneData?.loading && <Loading text="Loading" />}
+					{timeZoneData.loading && <Loading text="Loading" />}
 
 					{/* (>>>>>>>>>>>>>>>>>>>>>> LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
-					{!timeZoneData?.loading && (
+					{!timeZoneData.loading && (
 						<>
 
 							<Styles.TimeZoneHeader className="mb-1">
-								The Exclusive <i>Abstractapi.com</i> time {timeZoneData?.datetime && <>for:</>}
+								The Exclusive <i>Abstractapi.com</i> time {timeZoneData.datetime && <>for:</>}
 							</Styles.TimeZoneHeader>
 
 							<div  className="mb-1" data-testid="timezone-data">
-								{!timeZoneData?.datetime && timeZoneData?.error && (
+								{!timeZoneData.datetime && timeZoneData.error && (
 									<Styles.DataMessageError>Error when attempting to fetch resource.</Styles.DataMessageError>
 									)}
 
-								{timeZoneData?.datetime && !timeZoneData?.error && (
+								{timeZoneData.datetime && !timeZoneData.error && (
 									<Styles.DataMessageName>{timeZoneData.requested_location}</Styles.DataMessageName>
 									)}
 							</div>
 
-							{timeZoneData?.datetime && !timeZoneData?.error && (
+							{timeZoneData.datetime && !timeZoneData.error && (
 								<div className="mb-1"><Styles.DataMessageDate>{getFormattedDate(timeZoneData.datetime)}</Styles.DataMessageDate></div>
 								)}
 
-							{timeZoneData?.datetime && !timeZoneData?.error && (
+							{timeZoneData.datetime && !timeZoneData.error && (
 								<div className="mb-1"><Styles.DataMessageTime>{getFormattedTime(timeZoneData.datetime)}</Styles.DataMessageTime></div>
 								)}
 
-							{timeZoneData?.datetime && !timeZoneData?.error && (
+							{timeZoneData.datetime && !timeZoneData.error && (
 								<div><Styles.DataMessageTZ>{timeZoneData.timezone_name}</Styles.DataMessageTZ>&nbsp;-&nbsp;<Styles.DataMessageTZ>{timeZoneData.timezone_abbreviation}</Styles.DataMessageTZ></div>
 								)}
 

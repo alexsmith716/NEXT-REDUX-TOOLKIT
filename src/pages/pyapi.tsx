@@ -9,10 +9,10 @@ import BridgeRatingsCsvGridColumnHeader from '../components/BridgeRatingsCsvGrid
 import BridgeRatingsCsvGridRowItems from '../components/BridgeRatingsCsvGridRowItems';
 import { fetchData } from '../utils/fetchAPI';
 import { TodosType, FibonacciType, NycCountyType, } from '../types';
-import {
-	fetchBridgeRatings,
-	bridgeRatingsSliceData,
-} from '../redux/slices/bridgeRatingsSlice';
+
+import { fetchBridgeRatings, bridgeRatingsSliceData, } from '../redux/slices/bridgeRatingsSlice';
+import { fetchBridgeRatingsFull, bridgeRatingsFullSliceData, } from '../redux/slices/bridgeRatingsFullSlice';
+import { BridgeRatingsFullSliceData } from '../redux/slices/bridgeRatingsFullSlice';
 
 interface PythonAPIProps {
 	documentTitle?: string;
@@ -36,11 +36,25 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	const [nycCounty, setNycCounty] = useState<NycCountyType>();
 
 	const bridgeRatingsData = useAppSelector(bridgeRatingsSliceData);
-
+	const bridgeRatingsFullData = useAppSelector(bridgeRatingsFullSliceData);
+	
 	function dispatchLoadBridgeRatings() {
-		dispatch(fetchBridgeRatings())
+		if(!bridgeRatingsData.loading && !bridgeRatingsData.data) {
+			dispatch(fetchBridgeRatings())
+		}
 	};
 
+	function dispatchLoadBridgeRatingsFull() {
+		if(!bridgeRatingsFullData.loading && !bridgeRatingsFullData.data) {
+			dispatch(fetchBridgeRatingsFull())
+		}
+	};
+
+	function createBridgeRatingsFull(reponse: BridgeRatingsFullSliceData) {
+		return reponse.data;
+	};
+
+	const createBRatingsFull = useMemo(() => createBridgeRatingsFull(bridgeRatingsFullData), [bridgeRatingsFullData]);
 	const bridgeRCGColumnHeader = useMemo(() => BridgeRatingsCsvGridColumnHeader(bridgeRatingsData), [bridgeRatingsData]);
 	const bridgeRCGRowItems = useMemo(() => BridgeRatingsCsvGridRowItems(bridgeRatingsData), [bridgeRatingsData]);
 
@@ -212,29 +226,69 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 					<div className="mb-3">
 						<Button
 							type="button"
-							className={`btn-primary btn-md ${bridgeRatingsData?.data ? 'disabled' : ''}`}
+							className={`btn-primary btn-md ${(bridgeRatingsFullData.loading || bridgeRatingsFullData.data) ? 'disabled' : ''}`}
 							onClick={() => {
-								dispatchLoadBridgeRatings()
+								dispatchLoadBridgeRatingsFull()
 							}}
-							buttonText="Get Bridge Ratings"
+							buttonText="Get Full Bridge Ratings"
 						/>
-						{bridgeRatingsData?.loading && (
+						{bridgeRatingsFullData.loading && (
 							<div className="mt-1 ml-2">
 								<Loading text="Loading" />
 							</div>
 						)}
 
-						{!bridgeRatingsData?.loading && (
+						{!bridgeRatingsFullData.loading && (
 							<>
-								{!bridgeRatingsData?.data && bridgeRatingsData?.error && (
+								{!bridgeRatingsFullData.data && bridgeRatingsFullData.error && (
 									<div className="mt-1 ml-2">
 										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											{/* {bridgeRatingsFullData.error} */}
 											Error when attempting to fetch resource.
 										</div>
 									</div>
 								)}
 
-								{bridgeRatingsData?.data && !bridgeRatingsData?.error && (
+								{bridgeRatingsFullData.data && !bridgeRatingsFullData.error && (
+									<div className="mt-1 ml-2 container-padding-border-1 container-overflow-height-small">
+										<pre>
+											{createBRatingsFull}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
+					</div>
+
+					{/* ============================================== */}
+
+					<div className="mb-3">
+						<Button
+							type="button"
+							className={`btn-primary btn-md ${(bridgeRatingsData.loading || bridgeRatingsData.data) ? 'disabled' : ''}`}
+							onClick={() => {
+								dispatchLoadBridgeRatings()
+							}}
+							buttonText="Get Bridge Ratings"
+						/>
+						{bridgeRatingsData.loading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!bridgeRatingsData.loading && (
+							<>
+								{!bridgeRatingsData.data && bridgeRatingsData.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											{/* {bridgeRatingsData.error} */}
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{bridgeRatingsData.data && !bridgeRatingsData.error && (
 									<div className="mt-1 ml-2 container-border-1-radius-1 container-overflow-height-small">
 										<div>
 											<div className="table-bridge-ratings-wrapper">
@@ -249,8 +303,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							</>
 						)}
 					</div>
-
-					{/* ============================================== */}
 
 				</div>
 			</div>

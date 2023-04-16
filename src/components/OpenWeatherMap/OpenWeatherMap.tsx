@@ -72,8 +72,8 @@ const OpenWeatherMap = () => {
 	}, [int, locationArray.length]);
 
 	useEffect(() => {
-		if(openWeatherMapData?.location) {
-			setOpenWeatherSearchInput(openWeatherMapData?.location);
+		if(openWeatherMapData.location) {
+			setOpenWeatherSearchInput(openWeatherMapData.location);
 		}
 	}, [ openWeatherMapData, ]);
 
@@ -82,31 +82,31 @@ const OpenWeatherMap = () => {
 			<Styles.OpenWeathermapContainerBgColor className="flex-column align-items-center mb-5">
 				<Styles.OpenWeathermapContainer className="flex-column align-items-center">
 					{/* (>>>>>>>>>>>>>>>>>>>>>> LOADING >>>>>>>>>>>>>>>>>>>>>>>>) */}
-					{openWeatherMapData?.loading && <Loading text="Loading" />}
+					{openWeatherMapData.loading && <Loading text="Loading" />}
 
 					{/* (>>>>>>>>>>>>>>>>>>>>>> LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
-					{!openWeatherMapData?.loading && (
+					{!openWeatherMapData.loading && (
 						<>
 
 							<Styles.OpenWeathermapHeader className="mb-1">
-								The Exclusive <i>OpenWeather.com</i> forecast {openWeatherMapData?.name && <>for:</>}
+								The Exclusive <i>OpenWeather.com</i> forecast {openWeatherMapData.name && <>for:</>}
 							</Styles.OpenWeathermapHeader>
 
 							<div className="mb-1" data-testid="open-weather-data">
-								{!openWeatherMapData?.name && openWeatherMapData?.error && (
+								{!openWeatherMapData.name && openWeatherMapData.error && (
 									<Styles.DataMessageError>Error when attempting to fetch resource.</Styles.DataMessageError>
 									)}
 
-								{openWeatherMapData?.name && !openWeatherMapData?.error && (
+								{openWeatherMapData.name && !openWeatherMapData.error && (
 									<Styles.DataMessageName>{openWeatherMapData.name}</Styles.DataMessageName>
 									)}
 							</div>
 
-							{openWeatherMapData?.name && !openWeatherMapData?.error && (
+							{openWeatherMapData.name && !openWeatherMapData.error && (
 								<div className="mb-1"><Styles.DataMessage>{openWeatherMapData?.weather?.main}</Styles.DataMessage>&nbsp;-&nbsp;<Styles.DataMessage>{openWeatherMapData?.weather?.description}</Styles.DataMessage></div>
 								)}
 
-							{openWeatherMapData?.name && !openWeatherMapData?.error && (
+							{openWeatherMapData.name && !openWeatherMapData.error && (
 								<div><Styles.DataMessageTemp>{openWeatherMapDataTemp}&#x00B0;F</Styles.DataMessageTemp></div>
 								)}
 
