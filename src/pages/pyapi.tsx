@@ -56,7 +56,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className={`btn-primary btn-md ${bridgeRatingsData?.data ? 'disabled' : ''}`}
 							onClick={() => {
-								console.log('>>>>>>>>>>>> PYAPI > dispatch > fetchBridgeRatings > onClick 00000000000')
 								dispatchLoadBridgeRatings()
 							}}
 							buttonText="Get Bridge Ratings"
