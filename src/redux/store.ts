@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
-import { Action, AnyAction, combineReducers } from 'redux';
+import { Action, combineReducers } from 'redux';
 import { createWrapper } from 'next-redux-wrapper';
 import openWeatherMapSlice from './slices/openWeatherMapSlice';
 import userAgentSlice from './slices/userAgentSlice';
@@ -41,7 +41,7 @@ type AppStore = ReturnType<typeof makeStore>;
 
 // https://github.com/reduxjs/redux-thunk/issues/333
 export type AppState = ReturnType<typeof rootReducers>;
-type TypedDispatch<T> = ThunkDispatch<T, any, AnyAction>;
+type TypedDispatch<T> = ThunkDispatch<T, any, Action>;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action>;
 
 export const useAppDispatch = () => useDispatch<TypedDispatch<AppState>>();
