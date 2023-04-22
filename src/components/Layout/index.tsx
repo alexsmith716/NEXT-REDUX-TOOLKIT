@@ -2,9 +2,7 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 import NavBar from '../NavBar/NavBar';
-import OpenWeatherMap from '../OpenWeatherMap/OpenWeatherMap';
 import UserAgent from '../UserAgent/UserAgent';
-import TimeZone from '../TimeZone/TimeZone';
 import Footer from '../Footer/Footer';
 import DatePicker from '../DatePicker/DatePicker';
 
@@ -13,11 +11,15 @@ import { AppTheme } from '../../styled';
 import { Global } from '../../styled';
 
 type Props = {
-	children?: ReactNode
-	title?: string
-}
+	documentTitle: string;
+	userAgent: {
+		userAgent?: string;
+		host?: string;
+	};
+	children: ReactNode;
+};
 
-export const Layout = ({ children, title = 'Alex Smith\'s App' }: Props) => {
+const Layout = ({ documentTitle, userAgent, children }: Props) => {
 	const themeMode = useReactContext();
 	const themeModeKey = `${themeMode.mode}` as string;
 	const themeModeModalKey = `${themeMode.modalMode}` as string;
@@ -40,7 +42,7 @@ export const Layout = ({ children, title = 'Alex Smith\'s App' }: Props) => {
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content="Alex Smith's App" />
 				<meta property="og:description" content="Alex Smith's App" />
-				<title>{title}</title>
+				<title>{documentTitle}</title>
 			</Head>
 
 			<NavBar />
@@ -49,13 +51,18 @@ export const Layout = ({ children, title = 'Alex Smith\'s App' }: Props) => {
 
 			<DatePicker />
 
-			<TimeZone />
+			{/* using client-side data fetching for `TimeZone` */}
+			{/* <TimeZone /> */}
 
-			<OpenWeatherMap />
+			{/* using client-side data fetching for `OpenWeatherMap` */}
+			{/* <OpenWeatherMap /> */}
 
-			<UserAgent />
+			<UserAgent userAgent={userAgent} />
 
 			<Footer />
 		</ThemeProvider>
 	)
 };
+
+export default Layout;
+

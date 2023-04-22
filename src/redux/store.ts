@@ -1,13 +1,15 @@
 import { configureStore, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
-import { Action, combineReducers } from 'redux';
+import { Action, AnyAction, combineReducers } from 'redux';
 import { createWrapper } from 'next-redux-wrapper';
+
 import openWeatherMapSlice from './slices/openWeatherMapSlice';
 import userAgentSlice from './slices/userAgentSlice';
 import timeZoneSlice from './slices/timeZoneSlice';
-
 import bridgeRatingsFullSlice from './slices/bridgeRatingsFullSlice';
 import bridgeRatingsReplacementCostSlice from './slices/bridgeRatingsReplacementCostSlice';
 import bridgeRatingsSlice from './slices/bridgeRatingsSlice';
+//import nycBridgeRatingsSlice from './slices/nycBridgeRatingsSlice';
+import aboutGetSsrSlice from './slices/aboutGetSsrSlice';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
@@ -20,10 +22,13 @@ const reducers = {
 	[bridgeRatingsFullSlice.name]: bridgeRatingsFullSlice.reducer,
 	[bridgeRatingsReplacementCostSlice.name]: bridgeRatingsReplacementCostSlice.reducer,
 	[bridgeRatingsSlice.name]: bridgeRatingsSlice.reducer,
+	//[nycBridgeRatingsSlice.name]: nycBridgeRatingsSlice.reducer,
+	[aboutGetSsrSlice.name]: aboutGetSsrSlice.reducer,
 };
+
 const rootReducers = combineReducers(reducers);
 
-const makeStore = () => {
+export const makeStore = () => {
 	const isServer = typeof window === 'undefined';
 
 	if (isServer) {
@@ -44,7 +49,7 @@ const makeStore = () => {
 type AppStore = ReturnType<typeof makeStore>;
 
 export type AppState = ReturnType<typeof rootReducers>;
-type TypedDispatch<T> = ThunkDispatch<T, any, Action>;
+type TypedDispatch<T> = ThunkDispatch<T, any, AnyAction>;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action>;
 
 export const useAppDispatch = () => useDispatch<TypedDispatch<AppState>>();
