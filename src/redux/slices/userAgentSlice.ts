@@ -4,18 +4,18 @@ import { AppState, AppThunk } from '../store';
 
 interface UserAgentSliceData {
 	userAgent: string;
-	isBot: string;
+	host: string;
 };
 
 interface UserAgentSliceState {
 	data: UserAgentSliceData | null;
 };
 
+const hydrate = createAction<AppState>(HYDRATE);
+
 const userAgentSliceInitialState: UserAgentSliceState = {
 	data: null,
 };
-
-const hydrate = createAction<AppState>(HYDRATE);
 
 export const userAgentSlice = createSlice({
 	name: 'userAgent',
@@ -28,7 +28,7 @@ export const userAgentSlice = createSlice({
 			}
 		},
 	},
-	extraReducers: (builder) => {
+	extraReducers: builder => {
 		builder.addCase(hydrate, (state, action) => {
 			return {
 				...state,
@@ -40,12 +40,12 @@ export const userAgentSlice = createSlice({
 
 // ==========================================================
 
-export const setUserAgent = (userAgent: string, isBot: string): AppThunk => async (dispatch,) => {
+export const setUserAgent = (userAgent: string, host: string): AppThunk => async (dispatch,) => {
 	dispatch(
 		userAgentSlice.actions.userAgentLoaded({
 			data: {
 				userAgent: userAgent,
-				isBot: isBot,
+				host: host,
 			},
 		}),
 	)
