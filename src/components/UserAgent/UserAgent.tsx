@@ -23,9 +23,9 @@ const UserAgent = (props: Props) => {
 			<div className="flex-column align-items-center mb-5">
 				<div className={`flex-column align-items-center ${styles.container}`}>
 
-					<div className={`fontPhilosopherBold ${styles.userAgentUserAgent}`}>{`device 'userAgent' store state is ${propsState?.userAgent}!`}</div>
+					<div className={`fontPhilosopherBold ${styles.userAgentUserAgent}`}>{`device 'User-Agent' header field is ${propsState?.userAgent}!`}</div>
 
-					<div className={`fontNorwester ${styles.userAgentIsBot}`}>{`device 'userAgent' store state is ${propsState?.host}`}</div>
+					<div className={`fontNorwester ${styles.userAgentIsBot}`}>{`device 'Host' header field is ${propsState?.host}`}</div>
 
 					<div className={`fontOldEnglish ${styles.blurb}`}>UserAgentStyled!</div>
 				</div>

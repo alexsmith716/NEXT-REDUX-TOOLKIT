@@ -2,7 +2,9 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 import NavBar from '../NavBar/NavBar';
+import OpenWeatherMap from '../OpenWeatherMap/OpenWeatherMap';
 import UserAgent from '../UserAgent/UserAgent';
+//import TimeZone from '../TimeZone/TimeZone';
 import Footer from '../Footer/Footer';
 import DatePicker from '../DatePicker/DatePicker';
 
@@ -51,11 +53,10 @@ const Layout = ({ documentTitle, userAgent, children }: Props) => {
 
 			<DatePicker />
 
-			{/* using client-side data fetching for `TimeZone` */}
+			{/* adding client-side data fetching for `TimeZone` */}
 			{/* <TimeZone /> */}
 
-			{/* using client-side data fetching for `OpenWeatherMap` */}
-			{/* <OpenWeatherMap /> */}
+			<OpenWeatherMap />
 
 			<UserAgent userAgent={userAgent} />
 

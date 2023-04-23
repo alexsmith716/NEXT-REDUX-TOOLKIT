@@ -43,25 +43,6 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ Component, 
 		await store.dispatch(setUserAgent(getUserAgent(ctx?.req?.headers['user-agent']!), getHost(ctx?.req?.headers['host']!)));
 	}
 
-	// this will be removed. will use client-side data fetching with `OpenWeatherMap`
-	// *** should begin process migrating next.js 13 from pages to app ***
-	//if (isServer) {
-	//	const startingGeo:string = '    nEw    yorK,    nY    ,      uS     ';
-	//	//const startingGeo:string = 'New York,NY,'; //fails -for state, country code is required
-
-	//	const latLon = await getAddress(startingGeo)
-	//		.then((response) => {
-	//			return response;
-	//		})
-	//		.catch( async () => {
-	//			await store.dispatch(fetchOpenWeatherMapError());
-	//			return null;
-	//		});
-	//	if(latLon) {
-	//		await store.dispatch(fetchOpenWeatherMap((latLon as unknown) as LatLonType));
-	//	}
-	//}
-
 	const pageProps = {
 		...(Component.getInitialProps ? await Component.getInitialProps({...ctx,store,}) : {}),
 		documentTitle: 'Alex Smith\'s App',
