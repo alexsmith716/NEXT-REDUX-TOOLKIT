@@ -1,31 +1,21 @@
 import React, { useState, useEffect, } from 'react';
+import { validateInput } from '../../utils/cityStateCountryInputValidate';
+import { formatInput  } from '../../utils/cityStateCountryInputFormat';
 import { fetchOpenWeatherMapAddress, fetchOpenWeatherMap } from '../../utils/fetchOpenWeatherMap';
 
 import Loading from '../Loading';
 import Button from '../Button';
 import * as Styles from './styles';
-import { LatLonType } from '../../types';
-
-type OpenWeatherMapData = {
-	weather?: {
-		main: string | null;
-		description: string | null;
-	};
-	main?: {
-		temp: number | null;
-	};
-	name?: string | null;
-	location?: string | null;
-};
+import { OpenWeatherMapType, LatLonType } from '../../types';
 
 const OpenWeatherMap = () => {
 	const [openWeatherMapDataLoading, setOpenWeatherMapDataLoading] = useState(true);
 	const [openWeatherMapDataError, setOpenWeatherMapDataError] = useState(false);
+	const [openWeatherSearchInput, setOpenWeatherSearchInput] = useState('');
 
-	const [openWeatherMapData, setOpenWeatherMapData] = useState<OpenWeatherMapData|null>(null);
-	//const [openWeatherSearchInput, setOpenWeatherSearchInput] = useState('');
+	const [openWeatherMapData, setOpenWeatherMapData] = useState<OpenWeatherMapType|null>(null);
 
-	const startingGeo = '    nEw    yOrK,    Ny    ,      uS     ';
+	const startingGeo = "    nEw    yOrK,    Ny    ,      uS     ";
 
 	let openWeatherMapDataTemp;
 
@@ -38,35 +28,51 @@ const OpenWeatherMap = () => {
 		openWeatherMapDataTemp = formatter.format(Number(openWeatherMapData?.main?.temp));
 	}
 
+	function setLoading() {
+		setOpenWeatherMapDataLoading(true);
+		setOpenWeatherMapDataError(false);
+		setOpenWeatherMapData(null);
+	};
+
+	function setLoaded() {
+		setOpenWeatherMapDataLoading(false);
+		setOpenWeatherMapDataError(false);
+	};
+
+	function setError() {
+		setOpenWeatherMapDataLoading(false);
+		setOpenWeatherMapDataError(true);
+	};
+
+	async function fetchTheWeather(searchVar: string) {
+		setLoading();
+
+		if (!validateInput(searchVar)) {
+			setError();
+			return;
+		}
+
+		const gc:string | undefined = formatInput(searchVar, false);
+		setOpenWeatherSearchInput(gc as string);
+
+		await fetchOpenWeatherMapAddress(searchVar)
+			.then((response) => {
+				fetchOpenWeatherMap((response as unknown) as LatLonType)
+					.then((response) => {
+						setLoaded();
+						setOpenWeatherMapData(response);
+					})
+					.catch(() => {
+						setError();
+					});
+			})
+			.catch(() => {
+				setError();
+			});
+	};
+
 	useEffect(() => {
-		(async () => {
-			await fetchOpenWeatherMapAddress(startingGeo)
-				.then((response) => {
-					fetchOpenWeatherMap((response as unknown) as LatLonType)
-						.then((response) => {
-							setOpenWeatherMapDataLoading(false);
-							let data = {
-								weather: {
-									main: response.weather[0].main,
-									description: response.weather[0].description
-								},
-								main: {
-									temp: response.main.temp
-								},
-								name: response.name
-							};
-							setOpenWeatherMapData(data);
-						})
-						.catch(() => {
-							setOpenWeatherMapDataLoading(false);
-							setOpenWeatherMapDataError(true);
-						});
-				})
-				.catch(() => {
-					setOpenWeatherMapDataLoading(false);
-					setOpenWeatherMapDataError(true);
-				});
-		})();
+		fetchTheWeather(startingGeo);
 	}, []);
 
 	return (
@@ -81,7 +87,7 @@ const OpenWeatherMap = () => {
 						<>
 
 							<Styles.OpenWeathermapHeader className="mb-1">
-								The Exclusive <i>OpenWeather.com</i> forecast {openWeatherMapData?.name && <>for:</>}
+								The Exclusive <i>OpenWeather.com</i> forecast {openWeatherMapData && !openWeatherMapDataError && <>for:</>}
 							</Styles.OpenWeathermapHeader>
 
 							<div className="mb-1" data-testid="open-weather-data">
@@ -95,7 +101,7 @@ const OpenWeatherMap = () => {
 							</div>
 
 							{openWeatherMapData && !openWeatherMapDataError && (
-								<div className="mb-1"><Styles.DataMessage>{openWeatherMapData.weather?.main}</Styles.DataMessage>&nbsp;-&nbsp;<Styles.DataMessage>{openWeatherMapData.weather?.description}</Styles.DataMessage></div>
+								<div className="mb-1"><Styles.DataMessage>{openWeatherMapData.weather[0].main}</Styles.DataMessage>&nbsp;-&nbsp;<Styles.DataMessage>{openWeatherMapData.weather[0].description}</Styles.DataMessage></div>
 								)}
 
 							{openWeatherMapData && !openWeatherMapDataError && (
@@ -109,8 +115,8 @@ const OpenWeatherMap = () => {
 											type="text"
 											className="form-control"
 											name="openWeatherSearchInput"
-											//value={openWeatherSearchInput}
-											//onChange={(e) => setOpenWeatherSearchInput(e.target.value)}
+											value={openWeatherSearchInput}
+											onChange={(e) => setOpenWeatherSearchInput(e.target.value)}
 											//placeholder={`${locationArray[int]}`}
 											data-testid="open-weather-data-form-input"
 										/>
@@ -122,7 +128,7 @@ const OpenWeatherMap = () => {
 							<div data-testid="open-weather-data-form-button">
 								<Button
 									className="btn-primary btn-md"
-									//onClick={() => fetchOpenWeather(openWeatherSearchInput)}
+									onClick={() => fetchTheWeather(openWeatherSearchInput)}
 									buttonText="Fetch"
 								/>
 							</div>
