@@ -45,8 +45,7 @@ const OpenWeatherMap = () => {
 		setOpenWeatherMapDataError(true);
 	};
 
-	// TODO: useCallback()
-	async function fetchTheWeather(searchVar: string) {
+	const fetchTheWeather = useCallback(async(searchVar: string) => {
 		setLoading();
 
 		if (!validateInput(searchVar)) {
@@ -71,10 +70,9 @@ const OpenWeatherMap = () => {
 			.catch(() => {
 				setError();
 			});
-	};
+	}, []);
 
 	useEffect(() => {
-		// TODO: useCallback()
 		fetchTheWeather(startingGeo);
 	}, [ fetchTheWeather ]);
 
