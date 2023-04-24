@@ -65,4 +65,3 @@ const Layout = ({ documentTitle, userAgent, children }: Props) => {
 };
 
 export default Layout;
-
