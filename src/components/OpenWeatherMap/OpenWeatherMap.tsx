@@ -1,7 +1,8 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
+import { fetchOpenWeatherMapAddress, fetchOpenWeatherMap } from '../../utils/componentFetchers';
 import { validateInput } from '../../utils/cityStateCountryInputValidate';
 import { formatInput  } from '../../utils/cityStateCountryInputFormat';
-import { fetchOpenWeatherMapAddress, fetchOpenWeatherMap } from '../../utils/fetchOpenWeatherMap';
 
 import Loading from '../Loading';
 import Button from '../Button';
@@ -44,6 +45,7 @@ const OpenWeatherMap = () => {
 		setOpenWeatherMapDataError(true);
 	};
 
+	// TODO: useCallback()
 	async function fetchTheWeather(searchVar: string) {
 		setLoading();
 
@@ -72,8 +74,9 @@ const OpenWeatherMap = () => {
 	};
 
 	useEffect(() => {
+		// TODO: useCallback()
 		fetchTheWeather(startingGeo);
-	}, []);
+	}, [ fetchTheWeather ]);
 
 	return (
 		<div className="container" data-testid="openweathermap-component">
