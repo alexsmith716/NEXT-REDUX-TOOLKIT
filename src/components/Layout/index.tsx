@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import NavBar from '../NavBar/NavBar';
 import OpenWeatherMap from '../OpenWeatherMap/OpenWeatherMap';
 import UserAgent from '../UserAgent/UserAgent';
-//import TimeZone from '../TimeZone/TimeZone';
+import TimeZone from '../TimeZone/TimeZone';
 import Footer from '../Footer/Footer';
 import DatePicker from '../DatePicker/DatePicker';
 
@@ -53,8 +53,7 @@ const Layout = ({ documentTitle, userAgent, children }: Props) => {
 
 			<DatePicker />
 
-			{/* adding client-side data fetching for `TimeZone` */}
-			{/* <TimeZone /> */}
+			<TimeZone />
 
 			<OpenWeatherMap />
 
