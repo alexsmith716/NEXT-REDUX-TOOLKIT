@@ -2,13 +2,18 @@ import type { NextPage, GetServerSideProps } from 'next';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import * as Styles from '../styles';
-import { fetchAboutGetSsr, aboutGetSsrSliceData } from '../redux/slices/aboutGetSsrSlice';
+import { fetchAboutGetSsr, fetchAboutGetSsrError, aboutGetSsrSliceData } from '../redux/slices/aboutGetSsrSlice';
 import Loading from '../components/Loading';
 import { AboutCSVBPostType } from '../types';
 import { wrapper, useAppSelector } from '../redux/store';
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => async (): Promise<any> => {
-	await store.dispatch(fetchAboutGetSsr())
+	try {
+		await store.dispatch(fetchAboutGetSsr())
+	}
+	catch (error) {
+		await store.dispatch(fetchAboutGetSsrError())
+	}
 });
 
 interface AboutSsrPageProps {
