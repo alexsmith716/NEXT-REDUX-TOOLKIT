@@ -60,6 +60,19 @@ export const aboutGetSsrSlice = createSlice({
 		})
 	},
 });
+
+// ==========================================================
+
+export const fetchAboutGetSsrError = (): AppThunk => async (dispatch,) => {
+	dispatch(
+		aboutGetSsrSlice.actions.sliceFailed({
+			data: {
+				loading: false,
+				error: true,
+			},
+		}),
+	)
+};
  
 // ==========================================================
 
