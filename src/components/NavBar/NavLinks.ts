@@ -14,4 +14,9 @@ export const NavLinks = [
 		url: 'pyapi',
 		linkType: 'navLink',
 	},
+	{
+		title: 'AWSS3',
+		url: 'awss3',
+		linkType: 'navLink',
+	},
 ];
