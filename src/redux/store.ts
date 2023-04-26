@@ -6,7 +6,7 @@ import userAgentSlice from './slices/userAgentSlice';
 import bridgeRatingsFullSlice from './slices/bridgeRatingsFullSlice';
 import bridgeRatingsReplacementCostSlice from './slices/bridgeRatingsReplacementCostSlice';
 import bridgeRatingsSlice from './slices/bridgeRatingsSlice';
-//import nycBridgeRatingsSlice from './slices/nycBridgeRatingsSlice';
+import nycBridgeRatingsSlice from './slices/nycBridgeRatingsSlice';
 import aboutGetSsrSlice from './slices/aboutGetSsrSlice';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ const reducers = {
 	[bridgeRatingsFullSlice.name]: bridgeRatingsFullSlice.reducer,
 	[bridgeRatingsReplacementCostSlice.name]: bridgeRatingsReplacementCostSlice.reducer,
 	[bridgeRatingsSlice.name]: bridgeRatingsSlice.reducer,
-	//[nycBridgeRatingsSlice.name]: nycBridgeRatingsSlice.reducer,
+	[nycBridgeRatingsSlice.name]: nycBridgeRatingsSlice.reducer,
 	[aboutGetSsrSlice.name]: aboutGetSsrSlice.reducer,
 };
 
