@@ -69,25 +69,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	const bridgeRCGRowItems = useMemo(() => BridgeRatingsCsvGridRowItems(bridgeRatingsData), [bridgeRatingsData]);
 
 	useEffect(() => {
-		if(bridgeRCGColumnHeader) {
-			console.log('>>>>>> PythonAPI > bridgeRCGColumnHeader 111 ++++++');
-		}else {
-			console.log('>>>>>> PythonAPI > bridgeRCGColumnHeader 222 ++++++');
-		}
-		if(bridgeRCGRowItems) {
-			console.log('>>>>>> PythonAPI > bridgeRCGRowItems 111 ++++++');
-		} else{
-			console.log('>>>>>> PythonAPI > bridgeRCGRowItems 222 ++++++');
-		}
-	}, [ bridgeRCGColumnHeader, bridgeRCGRowItems ]);
-
-	useEffect(() => {
-		if(bridgeRatingsData?.data) {
-			//console.log('>>>>>> PythonAPI > bridgeRatingsData?.data: ', bridgeRatingsData);
-		}
-	}, [ bridgeRatingsData, ]);
-
-	useEffect(() => {
 		if(todos) {
 			setTodosLoading(false)
 		}
