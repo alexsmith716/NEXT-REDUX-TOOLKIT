@@ -1,5 +1,4 @@
-import { createSlice, createSelector, createAction, PayloadAction, } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
+import { createSlice, createSelector, PayloadAction, } from '@reduxjs/toolkit';
 import { AppState, AppThunk } from '../store';
 
 interface UserAgentSliceData {
@@ -10,8 +9,6 @@ interface UserAgentSliceData {
 interface UserAgentSliceState {
 	data: UserAgentSliceData | null;
 };
-
-const hydrate = createAction<AppState>(HYDRATE);
 
 const userAgentSliceInitialState: UserAgentSliceState = {
 	data: null,
@@ -27,14 +24,6 @@ export const userAgentSlice = createSlice({
 				...payload,
 			}
 		},
-	},
-	extraReducers: builder => {
-		builder.addCase(hydrate, (state, action) => {
-			return {
-				...state,
-				...action.payload.userAgent,
-			};
-		})
 	},
 });
 

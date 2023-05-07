@@ -1,5 +1,4 @@
-import { createSlice, createSelector, createAction, PayloadAction, } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
+import { createSlice, createSelector, PayloadAction, } from '@reduxjs/toolkit';
 import { AppState, AppThunk } from '../../redux/store';
 import { fetchBridgeRatings } from '../../utils/fetchBridgeRatings';
 
@@ -12,8 +11,6 @@ export interface NycBridgeRatingsSliceData {
 interface NycBridgeRatingsSliceState {
 	data: NycBridgeRatingsSliceData;
 };
-
-const hydrate = createAction<AppState>(HYDRATE);
 
 const nycBridgeRatingsSliceInitialState: NycBridgeRatingsSliceState = {
 	data: {
@@ -46,15 +43,20 @@ export const nycBridgeRatingsSlice = createSlice({
 			}
 		},
 	},
-	extraReducers: builder => {
-		builder.addCase(hydrate, (state, action) => {
-			return {
-				...state,
-				...action.payload.nycBridgeRatings,
-			};
-		})
-	},
 });
+
+// ==========================================================
+
+export const fetchNycBridgeRatingsError = (): AppThunk => async (dispatch,) => {
+	dispatch(
+		nycBridgeRatingsSlice.actions.sliceFailed({
+			data: {
+				loading: false,
+				error: true,
+			},
+		}),
+	)
+};
 
 // ==========================================================
 

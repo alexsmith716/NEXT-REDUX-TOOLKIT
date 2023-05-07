@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { Action, AnyAction, combineReducers } from 'redux';
-import { createWrapper } from 'next-redux-wrapper';
+import { createWrapper, MakeStore } from 'next-redux-wrapper';
+//import logger from 'redux-logger';
 
 import userAgentSlice from './slices/userAgentSlice';
 import bridgeRatingsFullSlice from './slices/bridgeRatingsFullSlice';
@@ -24,22 +25,18 @@ const reducers = {
 
 const rootReducers = combineReducers(reducers);
 
-export const makeStore = () => {
-	const isServer = typeof window === 'undefined';
+const makeStore: MakeStore<any> = ({reduxWrapperMiddleware}) => {
+	const store = configureStore({
+		reducer: rootReducers,
+		//devTools: true,
+		middleware: getDefaultMiddleware =>
+			//[...getDefaultMiddleware(), process.browser ? logger : null, reduxWrapperMiddleware].filter(
+			[...getDefaultMiddleware(), reduxWrapperMiddleware].filter(
+				Boolean,
+			) as any,
+	});
 
-	if (isServer) {
-		return configureStore({
-			reducer: rootReducers,
-			//devTools: true,
-		});
-	} else {
-		const store = configureStore({
-			reducer: rootReducers,
-			//devTools: true,
-		});
-
-		return store;
-	}
+	return store;
 };
 
 type AppStore = ReturnType<typeof makeStore>;
