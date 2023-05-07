@@ -9,6 +9,7 @@ import { wrapper, useAppSelector } from '../redux/store';
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => async (): Promise<any> => {
 	try {
+		//using redux here doesn't exactly serve a purpose but it could for other use-cases
 		await store.dispatch(fetchAboutGetSsr())
 	}
 	catch (error) {
@@ -20,15 +21,11 @@ interface AboutSsrPageProps {
 	documentTitle: string;
 };
 
-const AboutSsr: NextPage<AboutSsrPageProps> = ({documentTitle}) => {
-	let postsData;
+const AboutSsr: NextPage<AboutSsrPageProps> = ({ documentTitle,  ...props}) => {
+	wrapper.useHydration(props);
+
 	const [title, setTitle] = useState('');
-
 	const aboutGetSsrData = useAppSelector(aboutGetSsrSliceData);
-
-	if(aboutGetSsrData.data && !aboutGetSsrData.error) {
-		postsData = aboutGetSsrData.data;
-	}
 
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020About\u0020SSR');
@@ -65,14 +62,14 @@ const AboutSsr: NextPage<AboutSsrPageProps> = ({documentTitle}) => {
 
 						{!aboutGetSsrData.loading && (
 							<>
-								{!aboutGetSsrData.data && aboutGetSsrData.error && (
+								{aboutGetSsrData.error && (
 									<p className="bg-warn-red container-padding-radius-10 text-color-white">
 										Error when attempting to fetch resource.
 									</p>
 								)}
 
-								{aboutGetSsrData.data && !aboutGetSsrData.error && (
-									<>{postsData?.map((post: AboutCSVBPostType, key: number) => (
+								{!aboutGetSsrData.error && (
+									<>{aboutGetSsrData?.data?.map((post: AboutCSVBPostType, key: number) => (
 										<p data-testid="posts" key={key}>
 											{post.body}
 										</p>

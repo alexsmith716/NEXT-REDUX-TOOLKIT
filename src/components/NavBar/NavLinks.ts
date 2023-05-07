@@ -10,8 +10,23 @@ export const NavLinks = [
 		linkType: 'navLink',
 	},
 	{
+		title: 'SwrGithubGists',
+		url: 'swrgithubgists',
+		linkType: 'navLink',
+	},
+	{
+		title: 'AboutSwrInfinite',
+		url: 'aboutswrinfinite',
+		linkType: 'navLink',
+	},
+	{
 		title: 'Pyapi',
 		url: 'pyapi',
+		linkType: 'navLink',
+	},
+	{
+		title: 'GraphQLQuery',
+		url: 'graphqlquery',
 		linkType: 'navLink',
 	},
 	{
