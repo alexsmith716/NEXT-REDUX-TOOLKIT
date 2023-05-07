@@ -6,7 +6,21 @@ module.exports = {
 	env: {},
 
 	experimental: {
-		appDir: true,
+		appDir: false,
+	},
+
+	webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) => {
+		config.module.rules.push({
+			test: /\.(graphql|gql)$/,
+			loader: 'graphql-tag/loader',
+		});
+		config.plugins.push(
+			new webpack.DefinePlugin({
+				__DEV__: dev,
+				__IS_SERVER__: isServer,
+			})
+		);
+		return config;
 	},
 
 	async rewrites() {

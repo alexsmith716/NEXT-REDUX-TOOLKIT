@@ -1,0 +1,23 @@
+overwrite: true
+schema:
+  - 'https://rickandmortyapi.com/graphql'
+  - 'src/apollo/type-defs.ts'
+  - 'src/apollo/client-schema.graphql'
+documents:
+  - './src/apollo/queries/*.{ts,graphql}'
+  - '!node_modules'
+generates:
+  ./src/apollo/generated/resolvers-types.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-resolvers'
+  ./src/apollo/generated/react-apollo.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      reactApolloVersion: 3
