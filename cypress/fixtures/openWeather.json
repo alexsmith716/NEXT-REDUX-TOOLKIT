@@ -1,0 +1,42 @@
+{
+	"coord": {
+		"lon": -71.0598,
+		"lat": 42.3584
+	},
+	"weather": [{
+		"id": 800,
+		"main": "Clear",
+		"description": "clear sky",
+		"icon": "01n"
+	}],
+	"base": "stations",
+	"main": {
+		"temp": 67.26,
+		"feels_like": 66.97,
+		"temp_min": 63.21,
+		"temp_max": 69.91,
+		"pressure": 1004,
+		"humidity": 70
+	},
+	"visibility": 10000,
+	"wind": {
+		"speed": 1.99,
+		"deg": 140,
+		"gust": 8.01
+	},
+	"clouds": {
+		"all": 0
+	},
+	"dt": 1654825282,
+	"sys": {
+		"type": 2,
+		"id": 2001997,
+		"country": "US",
+		"sunrise": 1654765649,
+		"sunset": 1654820385
+	},
+	"timezone": -14400,
+	"id": 4930956,
+	"name": "Boston",
+	"cod": 200
+}
