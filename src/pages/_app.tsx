@@ -1,7 +1,7 @@
 import { AppContext, AppInitialProps } from 'next/app';
-//import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
-//import { useApollo } from '../apollo/apolloClient';
+import { useApollo } from '../apollo/apolloClient';
 import { ThemeContext } from '../styled/ThemeContext';
 import Layout from '../components/Layout';
 import { getUserAgent, getHost } from '../utils/userAgent';
@@ -11,22 +11,23 @@ import { wrapper } from '../redux/store';
 import '../styled/global-css/fonts.css';
 import '../styled/global-css/styles.css';
 
-const App = ({ Component, ...initialProps }: AppContext & AppInitialProps) => {
-	const {store, props} = wrapper.useWrappedStore(initialProps);
-	//const clientApollo = useApollo(props.pageProps.initialApolloState);
-	const dt = initialProps.pageProps.documentTitle;
-	const ua = initialProps.pageProps.userAgent;
+const App = ({ Component, pageProps }: AppContext & AppInitialProps) => {
+	const store = wrapper.useStore();
+
+	const clientApollo = useApollo(pageProps.initialApolloState);
+	const dt = pageProps.documentTitle;
+	const ua = pageProps.userAgent;
 
 	return (
-		//<ApolloProvider client={clientApollo}>
+		<ApolloProvider client={clientApollo}>
 			<Provider store={store}>
 				<ThemeContext>
 					<Layout documentTitle={dt} userAgent={ua}>
-						<Component {...props.pageProps} />
+						<Component {...pageProps} />
 					</Layout>
 				</ThemeContext>
 			</Provider>
-		//</ApolloProvider>
+		</ApolloProvider>
 	);
 };
 
@@ -44,7 +45,7 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ Component, 
 	}
 
 	const pageProps = {
-		...(Component.getInitialProps ? await Component.getInitialProps({...ctx,store,}) : {}),
+		...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx }) : {}),
 		documentTitle: 'Alex Smith\'s App',
 		userAgent: userAgent,
 	};

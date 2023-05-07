@@ -1,5 +1,4 @@
-import { createSlice, createSelector, createAction, PayloadAction, } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
+import { createSlice, createSelector, PayloadAction, } from '@reduxjs/toolkit';
 import { AppState, AppThunk } from '../../redux/store';
 import { fetchData } from '../../utils/fetchAPI';
 
@@ -12,8 +11,6 @@ export interface BridgeRatingsFullSliceData {
 interface BridgeRatingsFullSliceState {
 	data: BridgeRatingsFullSliceData;
 };
-
-const hydrate = createAction<AppState>(HYDRATE);
 
 const bridgeRatingsFullSliceInitialState: BridgeRatingsFullSliceState = {
 	data: {
@@ -45,14 +42,6 @@ export const bridgeRatingsFullSlice = createSlice({
 				...payload,
 			}
 		},
-	},
-	extraReducers: builder => {
-		builder.addCase(hydrate, (state, action) => {
-			return {
-				...state,
-				...action.payload.bridgeRatingsFull,
-			};
-		})
 	},
 });
 

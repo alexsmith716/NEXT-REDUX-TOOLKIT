@@ -1,5 +1,4 @@
-import { createSlice, createSelector, createAction, PayloadAction, } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
+import { createSlice, createSelector, PayloadAction, } from '@reduxjs/toolkit';
 import { AppState, AppThunk } from '../../redux/store';
 import { fetchData } from '../../utils/fetchAPI';
 
@@ -12,8 +11,6 @@ export interface BridgeRatingsReplacementCostSliceData {
 interface BridgeRatingsReplacementCostSliceState {
 	data: BridgeRatingsReplacementCostSliceData;
 };
-
-const hydrate = createAction<AppState>(HYDRATE);
 
 const bridgeRatingsReplacementCostSliceInitialState: BridgeRatingsReplacementCostSliceState = {
 	data: {
@@ -45,14 +42,6 @@ export const bridgeRatingsReplacementCostSlice = createSlice({
 				...payload,
 			}
 		},
-	},
-	extraReducers: builder => {
-		builder.addCase(hydrate, (state, action) => {
-			return {
-				...state,
-				...action.payload.bridgeRatingsReplacementCost,
-			};
-		})
 	},
 });
 

@@ -1,5 +1,4 @@
-import { createSlice, createSelector, createAction, PayloadAction, } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
+import { createSlice, createSelector, PayloadAction, } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { AppState, AppThunk } from '../../redux/store';
 
@@ -17,8 +16,6 @@ export interface AboutGetSsrSliceData {
 interface AboutGetSsrSliceState {
 	data: AboutGetSsrSliceData;
 };
-
-const hydrate = createAction<AppState>(HYDRATE);
 
 const aboutGetSsrSliceInitialState: AboutGetSsrSliceState = {
 	data: {
@@ -51,14 +48,6 @@ export const aboutGetSsrSlice = createSlice({
 			}
 		},
 	},
-	extraReducers: builder => {
-		builder.addCase(hydrate, (state, action) => {
-			return {
-				...state,
-				...action.payload.aboutGetSsr,
-			};
-		})
-	},
 });
 
 // ==========================================================
@@ -88,7 +77,7 @@ export const fetchAboutGetSsr = (): AppThunk => async (dispatch,) => {
 
 	try {
 		const limit: number = Math.floor(Math.random() * 6) + 1;
-		const response = await axios.get(`https://jsonplaceholder.typicode.com/posts`, {params: {_limit:`${limit}`}})
+		const response = await axios.get(`https://jsonplaceholder.typicode.com/posts`, {params: {_limit:`${limit}`}});
 
 		dispatch(
 			aboutGetSsrSlice.actions.sliceLoaded({
