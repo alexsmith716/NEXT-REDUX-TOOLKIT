@@ -7,6 +7,9 @@
 /coverage
 *.tsbuildinfo
 
+# build
+/dist
+
 # next.js
 /.next/
 /out/
