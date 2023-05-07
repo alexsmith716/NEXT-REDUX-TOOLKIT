@@ -4,6 +4,7 @@ import Head from 'next/head';
 import BridgeRatingsCsvGridColumnHeader from '../components/BridgeRatingsCsvGridColumnHeader';
 import BridgeRatingsCsvGridRowItems from '../components/BridgeRatingsCsvGridRowItems';
 import Loading from '../components/Loading';
+import Button from '../components/Button';
 
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { fetchNycBridgeRatings, nycBridgeRatingsSliceData, } from '../redux/slices/nycBridgeRatingsSlice';
@@ -19,7 +20,7 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 	const nycBridgeRatingsData = useAppSelector(nycBridgeRatingsSliceData);
 
 	useEffect(() => {
-		if(!nycBridgeRatingsData.loading && !nycBridgeRatingsData.data) {
+		if(!nycBridgeRatingsData.error && !nycBridgeRatingsData.loading && !nycBridgeRatingsData.data) {
 			dispatch(fetchNycBridgeRatings())
 		}
 	}, [nycBridgeRatingsData, dispatch]);
@@ -30,6 +31,10 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 
 	const bridgeRCGColumnHeader = useMemo(() => BridgeRatingsCsvGridColumnHeader(nycBridgeRatingsData), [nycBridgeRatingsData]);
 	const bridgeRCGRowItems = useMemo(() => BridgeRatingsCsvGridRowItems(nycBridgeRatingsData), [nycBridgeRatingsData]);
+
+	const fetchNycBridgeRatingsClick = () => {
+		dispatch(fetchNycBridgeRatings())
+	};
 
 	return (
 		<>
@@ -76,7 +81,7 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 						<>
 							{!nycBridgeRatingsData.data && nycBridgeRatingsData.error && (
 								<div className="bg-warn-red container-padding-radius-10 text-color-white">
-									Error when attempting to fetch resource.
+									Error when attempting to fetch resource.&nbsp;&nbsp;<span><Button type="button" className="btn-light btn-tiny" onClick={fetchNycBridgeRatingsClick} buttonText="Retry"/></span>
 								</div>
 							)}
 
