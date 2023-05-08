@@ -1,0 +1,43 @@
+#import "./fragmentAuthorFields.graphql"
+#import "./fragmentBookFields.graphql"
+
+query GetBooks {
+	books {
+		id
+		name
+		author {
+			name
+		}
+	}
+}
+
+query GetAuthors {
+	authors {
+		id
+		name
+	}
+}
+
+mutation MutateAddAuthor($name: String!) {
+	addAuthor(name: $name) {
+		__typename
+		... on AuthorExists {
+			__typename
+			message
+		}
+		... on Author {
+			__typename
+			...fragmentAuthorFields
+		}
+	}
+}
+
+mutation MutateAddBook($name: String!, $authorName: String!) {
+	addBook(name: $name, authorName: $authorName) {
+		__typename
+		... on Book {
+			__typename
+			...fragmentBookFields
+		}
+	}
+}

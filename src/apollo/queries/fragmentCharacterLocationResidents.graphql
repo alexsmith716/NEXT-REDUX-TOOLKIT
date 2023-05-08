@@ -1,0 +1,12 @@
+#import "./fragmentCharacter.graphql"
+
+fragment fragmentCharacterLocationResidents on Character {
+	id
+	location {
+		id
+		residents {
+			name
+			...fragmentCharacter
+		}
+	}
+}

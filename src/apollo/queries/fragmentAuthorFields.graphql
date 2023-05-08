@@ -1,0 +1,4 @@
+fragment fragmentAuthorFields on Author {
+	id
+	name
+}
