@@ -1,0 +1,11 @@
+#import "./fragmentCharacter.graphql"
+
+fragment fragmentEpisodeCharacters on Character {
+	id
+	episode {
+		id
+		characters {
+			...fragmentCharacter
+		}
+	}
+}

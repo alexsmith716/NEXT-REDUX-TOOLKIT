@@ -1,0 +1,55 @@
+#import "./fragmentCharacter.graphql"
+#import "./fragmentCharacterLocationResidents.graphql"
+#import "./fragmentCharacterEpisodes.graphql"
+#import "./fragmentEpisodeCharacters.graphql"
+
+query HelloWorld {
+	helloWorld
+}
+
+query GetAllRickAndMortyCharacters($page: Int, $filter: FilterCharacter){
+	characters(page: $page, filter: $filter) {
+		info {
+			count
+			pages
+			next
+			prev
+		}
+		results {
+			id
+			name
+			image
+		}
+	}
+}
+
+query GetRickAndMortyCharacterStarRating($id: ID!) {
+	character(id: $id) {
+		id
+		rating @client
+	}
+}
+
+query GetRickAndMortyCharacter($id: ID!) {
+	character(id: $id) {
+		...fragmentCharacter
+	}
+}
+
+query GetRickAndMortyCharacterLocationResidents($id: ID!) {
+	character(id: $id) {
+		...fragmentCharacterLocationResidents
+	}
+}
+
+query GetRickAndMortyCharacterEpisodes($id: ID!) {
+	character(id: $id) {
+		...fragmentCharacterEpisodes
+	}
+}
+
+query GetRickAndMortyEpisodeCharacters($id: ID!) {
+	character(id: $id) {
+		...fragmentEpisodeCharacters
+	}
+}

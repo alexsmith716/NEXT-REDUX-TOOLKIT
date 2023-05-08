@@ -1,0 +1,7 @@
+fragment fragmentBookFields on Book {
+	id
+	name
+	author {
+		name
+	}
+}
